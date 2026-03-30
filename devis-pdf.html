@@ -428,12 +428,17 @@ function renderHtml(d){
   // Décennale
   const decHtml = decCompagnie ? `<br>🛡️ Assurance décennale : ${decCompagnie}${decNumero ? ' — Police n° ' + decNumero : ''}` : '';
 
+  // Logo ou nom entreprise
+  const logoHtml = d.logo
+    ? `<img src="${d.logo}" style="max-height:52px;max-width:160px;object-fit:contain;">`
+    : `<div style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;color:#111;letter-spacing:-0.5px">${ent.nom || 'Votre Entreprise'}</div>`;
+
   document.getElementById('devis-container').innerHTML = `
   <div class="pdf-wrap">
 
     <!-- EN-TÊTE -->
     <div class="pdf-header">
-      <div class="pdf-logo">DEVIS<span>VOICE</span></div>
+      <div class="pdf-logo">${logoHtml}</div>
       <div class="pdf-num">
         <h1>DEVIS N° ${d.numero}</h1>
         <div class="meta">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}</div>
