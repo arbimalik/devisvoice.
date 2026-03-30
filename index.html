@@ -1243,8 +1243,8 @@ async function convertirPDFenImage(file){
   const pdfDoc = await window.pdfjsLib.getDocument({data: arrayBuffer}).promise;
   const page = await pdfDoc.getPage(1);
 
-  // Scale 3 pour une bonne résolution
-  const scale = 3;
+  // Scale 5 pour une haute résolution sans flou
+  const scale = 5;
   const viewport = page.getViewport({scale});
 
   const canvas = document.createElement('canvas');
