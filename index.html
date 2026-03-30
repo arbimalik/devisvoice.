@@ -53,7 +53,8 @@ nav{background:var(--nav);display:flex;align-items:center;justify-content:space-
 
 .form-group{margin-bottom:13px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px;}
-@media(max-width:520px){.form-row{grid-template-columns:1fr;}}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:13px;}
+@media(max-width:520px){.form-row,.form-row-3{grid-template-columns:1fr;}}
 label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:5px;}
 input,textarea,select{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:var(--input-bg);outline:none;transition:border-color .2s,background .3s;}
 input:focus,textarea:focus,select:focus{border-color:var(--orange);}
@@ -100,8 +101,6 @@ select option{background:var(--card);color:var(--text);}
   from{box-shadow:0 0 0 10px rgba(255,30,30,.15),0 0 0 22px rgba(255,30,30,.07),0 8px 32px rgba(255,30,30,.5),0 2px 10px rgba(0,0,0,.4);}
   to{box-shadow:0 0 0 16px rgba(255,30,30,.2),0 0 0 32px rgba(255,30,30,.08),0 14px 44px rgba(255,30,30,.6),0 2px 10px rgba(0,0,0,.4);transform:scale(1.07);}
 }
-
-
 
 .mic-lbl{font-size:13px;font-weight:500;color:var(--text2);text-align:center;min-height:18px;letter-spacing:.3px;}
 .mic-lbl.on{color:var(--orange);font-weight:600;}
@@ -196,12 +195,34 @@ select option{background:var(--card);color:var(--text);}
   <div class="card">
     <div class="card-header ch-orange">📋 Maître d'Ouvrage &amp; Chantier</div>
     <div class="card-body">
-      <div class="form-group"><label>Nom du Client</label><input type="text" id="client-nom" placeholder="M. et Mme Dupont"></div>
-      <div class="form-group"><label>Email Client</label><input type="email" id="client-email" placeholder="client@email.fr"></div>
-      <div class="form-group"><label>Adresse du Chantier</label><input type="text" id="chantier-adresse" placeholder="12 rue des Lilas, 75011 Paris"></div>
+      <div class="form-group"><label>Nom du Client</label><input type="text" id="client-nom" placeholder="M. et Mme Dupont" oninput="majDevisTempsReel()"></div>
+      <div class="form-group"><label>Email Client</label><input type="email" id="client-email" placeholder="client@email.fr" oninput="majDevisTempsReel()"></div>
+      <div class="form-group"><label>Adresse du Chantier</label><input type="text" id="chantier-adresse" placeholder="12 rue des Lilas, 75011 Paris" oninput="majDevisTempsReel()"></div>
       <div class="form-row">
-        <div><label>Nature des Travaux</label><input type="text" id="nature-travaux" placeholder="Rénovation salle de bain"></div>
-        <div><label>Délai d'Exécution</label><input type="text" id="delai-execution" placeholder="3 semaines"></div>
+        <div><label>Nature des Travaux</label><input type="text" id="nature-travaux" placeholder="Rénovation salle de bain" oninput="majDevisTempsReel()"></div>
+        <div><label>Délai d'Exécution</label><input type="text" id="delai-execution" placeholder="3 semaines" oninput="majDevisTempsReel()"></div>
+      </div>
+      <!-- NOUVEAU : date début + validité + acompte -->
+      <div class="form-row-3">
+        <div>
+          <label>Date de début des travaux</label>
+          <input type="date" id="date-debut" oninput="majDevisTempsReel()">
+        </div>
+        <div>
+          <label>Validité du devis</label>
+          <input type="text" id="validite-devis" placeholder="3 mois" value="3 mois" oninput="majDevisTempsReel()">
+        </div>
+        <div>
+          <label>Acompte à la commande</label>
+          <select id="acompte-pct" onchange="majDevisTempsReel()">
+            <option value="0">Aucun acompte</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+            <option value="40">40%</option>
+            <option value="50">50%</option>
+            <option value="60">60%</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -242,17 +263,14 @@ select option{background:var(--card);color:var(--text);}
           <div class="rpl rpl-2"></div>
           <div class="rpl rpl-3"></div>
           <button class="mic-main" id="mic-btn" onclick="toggleMic()">
-            <!-- Icône micro -->
             <svg class="ico-mic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm-7 8a1 1 0 0 1 1 1 6 6 0 0 0 12 0 1 1 0 0 1 2 0 8 8 0 0 1-7 7.93V22h3a1 1 0 0 1 0 2H8a1 1 0 0 1 0-2h3v-2.07A8 8 0 0 1 4 12a1 1 0 0 1 1-1z"/>
             </svg>
-            <!-- Icône stop carré -->
             <svg class="ico-stop" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <rect x="5" y="5" width="14" height="14" rx="2"/>
             </svg>
           </button>
         </div>
-
         <div class="mic-lbl" id="mic-lbl">Appuyez pour dicter</div>
       </div>
       <div id="dictee-text" class="dictee-box" contenteditable="true" data-ph="Votre dictée apparaît ici — ou tapez directement..."></div>
@@ -289,8 +307,6 @@ select option{background:var(--card);color:var(--text);}
     <div class="card-body">
       <div class="form-group">
         <label>Logo (PNG, JPG, SVG ou PDF — max 2 Mo)</label>
-
-        <!-- Zone upload drag & drop -->
         <div id="logo-dropzone" onclick="document.getElementById('logo-input').click()"
           style="margin-top:8px;border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--bg3);"
           ondragover="event.preventDefault();this.style.borderColor='var(--orange)'"
@@ -301,8 +317,6 @@ select option{background:var(--card);color:var(--text);}
           <div style="font-size:11px;color:var(--text2);">ou cliquez pour choisir — PNG, JPG, SVG, PDF</div>
         </div>
         <input type="file" id="logo-input" accept="image/*,.pdf,application/pdf" style="display:none" onchange="chargerLogoFichier(this.files[0])">
-
-        <!-- Aperçu actuel -->
         <div id="logo-preview-wrap" style="display:none;margin-top:12px;">
           <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;">Logo actuel</div>
           <div style="background:#fff;border-radius:8px;padding:12px;display:flex;align-items:center;justify-content:center;min-height:70px;border:1px solid var(--border);">
@@ -310,8 +324,6 @@ select option{background:var(--card);color:var(--text);}
           </div>
           <button onclick="supprimerLogo()" style="margin-top:8px;width:100%;background:rgba(220,50,50,.08);color:#e04040;border:1px solid rgba(220,50,50,.2);border-radius:7px;padding:8px;font-size:12px;font-weight:600;cursor:pointer;">🗑️ Supprimer le logo</button>
         </div>
-
-        <!-- Modale aperçu de validation -->
         <div id="logo-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;">
           <div style="background:var(--card);border-radius:16px;padding:24px;max-width:400px;width:100%;text-align:center;border:1px solid var(--border);">
             <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:6px;">Votre logo</div>
@@ -325,12 +337,9 @@ select option{background:var(--card);color:var(--text);}
             </div>
           </div>
         </div>
-
-        <!-- Indicateur de traitement -->
         <div id="logo-loading" style="display:none;text-align:center;padding:12px;font-size:12px;color:var(--orange);">
           <div class="spin" style="display:inline-block;margin-right:6px;vertical-align:middle;"></div>Traitement en cours…
         </div>
-
       </div>
     </div>
   </div>
@@ -411,6 +420,47 @@ function selMetier(el, key) {
   metier = el.dataset.m;
   if(!document.getElementById('nature-travaux').value) document.getElementById('nature-travaux').value = metier;
   afficherPrestations(key);
+}
+
+// ===== MISE À JOUR TEMPS RÉEL =====
+function majDevisTempsReel() {
+  if(!devisData) return;
+  // Patch les champs modifiables directement sur devisData
+  devisData.client.nom    = document.getElementById('client-nom').value    || devisData.client.nom;
+  devisData.client.email  = document.getElementById('client-email').value  || devisData.client.email;
+  devisData.chantier.adresse = document.getElementById('chantier-adresse').value || devisData.chantier.adresse;
+  devisData.chantier.nature  = document.getElementById('nature-travaux').value   || devisData.chantier.nature;
+  devisData.chantier.delai   = document.getElementById('delai-execution').value  || devisData.chantier.delai;
+
+  const dateDebut  = document.getElementById('date-debut').value;
+  const validite   = document.getElementById('validite-devis').value.trim() || '3 mois';
+  const acomptePct = parseInt(document.getElementById('acompte-pct').value) || 0;
+
+  devisData.date_debut = dateDebut ? formaterDate(dateDebut) : '';
+  devisData.validite   = validite;
+  devisData.acompte_pct = acomptePct;
+  if(acomptePct > 0) {
+    devisData.acompte_montant = Math.round(devisData.total_ttc * acomptePct / 100 * 100) / 100;
+  } else {
+    devisData.acompte_montant = 0;
+  }
+
+  // Mettre à jour les conditions automatiquement selon acompte
+  devisData.conditions = buildConditions(acomptePct);
+
+  renderDevis(devisData);
+}
+
+function formaterDate(iso) {
+  // iso = "2025-04-15" → "15/04/2025"
+  if(!iso) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function buildConditions(acomptePct) {
+  if(acomptePct === 0) return 'Solde à réception et levée des réserves.';
+  return `${acomptePct}% à la commande (${fmt(devisData ? devisData.total_ttc * acomptePct / 100 : 0)} € TTC), solde à réception et levée des réserves.`;
 }
 
 // ===== PRESTATIONS PAR MÉTIER =====
@@ -519,14 +569,12 @@ function savePrestations(key) {
 }
 function getPrestationsActives() {
   let res = [];
-  // Lire d'abord la mémoire vive (session en cours)
   const enMemoire = Object.keys(prestationsActives);
   if(enMemoire.length > 0){
     Object.values(prestationsActives).forEach(arr => arr.forEach(p=>{
       if(p.actif && p.prix) res.push(p.nom + ' — '+p.prix+'€/'+p.unite);
     }));
   } else {
-    // Sinon lire le localStorage (données sauvegardées)
     const cles = Object.keys(localStorage).filter(k=>k.startsWith('prest_'));
     cles.forEach(cle=>{
       try{
@@ -548,7 +596,6 @@ function toggleMic(){
 
 function startMic(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  // Toujours créer un nouvel objet SR propre
   if(recog){try{recog.abort();}catch(e){} recog=null;}
   recog=new SR();recog.lang='fr-FR';recog.continuous=true;recog.interimResults=true;
   const el=document.getElementById('dictee-text');
@@ -569,13 +616,12 @@ function startMic(){
     el.innerText=fin+int;
   };
   recog.onerror=(e)=>{
-    if(e.error==='aborted')return; // ignore les arrêts volontaires
+    if(e.error==='aborted')return;
     setLbl('❌ Erreur: '+e.error,false);
     stopMic();
   };
   recog.onend=()=>{
     if(!isRec)return;
-    // Recréer un objet propre pour le redémarrage automatique
     setTimeout(()=>{if(isRec)startMic();},150);
   };
   try{recog.start();}catch(e){setLbl('❌ Micro indisponible — rechargez',false);}
@@ -600,7 +646,6 @@ function startAudioViz(){
     src.connect(analyser);
     drawRings();
   }).catch(()=>{
-    // Pas de permission micro — anneaux CSS de fallback
     document.getElementById('mic-wrap').classList.add('recording');
   });
 }
@@ -611,7 +656,7 @@ function drawRings(){
   const rpl3=document.querySelector('.rpl-3');
   const data=new Uint8Array(analyser.frequencyBinCount);
   const SEUIL=10;
-  let volLisse=0; // volume lissé pour fluidité
+  let volLisse=0;
   function loop(){
     if(!isRec){
       rpl1.style.opacity='0';rpl2.style.opacity='0';rpl3.style.opacity='0';
@@ -621,14 +666,12 @@ function drawRings(){
     animFrame=requestAnimationFrame(loop);
     analyser.getByteFrequencyData(data);
     const volBrut=Array.from(data).reduce((a,b)=>a+b,0)/data.length;
-    // Lissage exponentiel — élimine la saccade
     volLisse=volLisse*0.75+volBrut*0.25;
     if(volLisse < SEUIL){
       rpl1.style.opacity='0';rpl2.style.opacity='0';rpl3.style.opacity='0';
       document.getElementById('mic-btn').style.transform='scale(1)';
     } else {
-      const force=Math.min(volLisse/80, 1); // 0 à 1, seuil plus haut = anneaux moins gros
-      // Anneaux petits et proportionnels
+      const force=Math.min(volLisse/80, 1);
       rpl1.style.transform=`scale(${1+force*0.25})`;rpl1.style.opacity=String(Math.min(0.6,force*0.8));
       rpl2.style.transform=`scale(${1+force*0.45})`;rpl2.style.opacity=String(Math.min(0.4,force*0.55));
       rpl3.style.transform=`scale(${1+force*0.65})`;rpl3.style.opacity=String(Math.min(0.2,force*0.3));
@@ -650,7 +693,6 @@ function setLbl(m,on){const el=document.getElementById('mic-lbl');el.textContent
 
 // ===== DÉDUPLICATION SECTIONS =====
 function fusionnerSections(sections) {
-  // Mapping des variantes vers le nom canonique
   const NOMS_CANONIQUES = {
     'terrassement': 'Terrassement / VRD',
     'terrassementvrd': 'Terrassement / VRD',
@@ -686,7 +728,6 @@ function fusionnerSections(sections) {
 
   sections.forEach(s => {
     const keyBrut = normaliser(s.metier);
-    // Cherche si une clé du mapping commence par la clé brute ou vice versa
     let keyCanon = keyBrut;
     for(const k of Object.keys(NOMS_CANONIQUES)) {
       if(keyBrut.startsWith(k) || k.startsWith(keyBrut)) {
@@ -717,6 +758,13 @@ async function genererDevis(){
   const chantierAdr=document.getElementById('chantier-adresse').value||'';
   const nature=document.getElementById('nature-travaux').value||metier||'';
   const delai=document.getElementById('delai-execution').value||'';
+
+  // Récupérer les nouveaux champs
+  const dateDebutISO  = document.getElementById('date-debut').value;
+  const dateDebutFmt  = dateDebutISO ? formaterDate(dateDebutISO) : '';
+  const validiteDevis = document.getElementById('validite-devis').value.trim() || '3 mois';
+  const acomptePct    = parseInt(document.getElementById('acompte-pct').value) || 0;
+
   document.getElementById('btn-gen').disabled=true;
   document.getElementById('result-box').style.display='none';
   const num='DV-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*900)+100);
@@ -724,17 +772,14 @@ async function genererDevis(){
   const prixArtisan=getPrestationsActives();
   const prixBlock=prixArtisan.length>0?`\nTARIFS ENREGISTRÉS PAR L'ARTISAN (utilise ces prix en priorité absolue):\n${prixArtisan.map(p=>'- '+p).join('\n')}\n`:'';
 
-  // ── Barre de progression ──
   function showProgress(etape,total,label){
     const pct=Math.round((etape/total)*100);
     showS('loading',`<div style="text-align:center;padding:4px 0 8px"><div style="font-size:13px;font-weight:600;margin-bottom:10px">${label}</div><div style="background:var(--bg3);border-radius:20px;height:8px;width:100%;overflow:hidden;margin-bottom:6px"><div id="prog-bar" style="background:var(--orange);height:100%;width:${pct}%;border-radius:20px"></div></div><div style="font-size:11px;color:var(--text2)">${etape > 0 ? 'Passe '+etape+' / '+total+' terminée' : 'Analyse en cours...'} • ${pct}%</div></div>`);
     setTimeout(()=>{ const b=document.getElementById('prog-bar'); if(b)b.style.width=pct+'%'; },50);
   }
 
-  // ── Découpe la dictée en passes de max 5 métiers ──
-  const TAILLE_PASSE=12; // postes max par passe
+  const TAILLE_PASSE=12;
   function decouperEnPasses(texte){
-    // Compte les postes par les virgules (chaque poste = séparé par virgule)
     const postes=texte.split(',').map(s=>s.trim()).filter(s=>s.length>0);
     const nbPostes=postes.length;
     const nbPasses=Math.max(1,Math.ceil(nbPostes/TAILLE_PASSE));
@@ -764,6 +809,11 @@ async function genererDevis(){
   let idCounter=1;
 
   showProgress(0,totalPasses,'⚙️ Démarrage de la génération…');
+
+  // Construire les conditions selon l'acompte
+  const conditionsDevis = acomptePct > 0
+    ? `${acomptePct}% à la commande, solde à réception et levée des réserves`
+    : 'Solde à réception et levée des réserves';
 
   const BIBLIO=`VOCABULAIRE — corrige les erreurs de reconnaissance vocale:
 "grésérum/grey serum/grès sérum/graissera" → Grès cérame
@@ -961,10 +1011,10 @@ Numérote les postes en continu sur tout le devis (id 1, 2, 3... sans recommence
 RÈGLE ANTI-DOUBLON ABSOLUE : Chaque nom de section ne peut apparaître qu'UNE SEULE FOIS. Tous les postes de terrassement (évacuation gravats, décaissement, remblai, évacuation terres) vont dans UNE SEULE section "Terrassement / VRD". Si tu hésites entre deux sections, choisis celle de la liste ci-dessus la plus logique et n'en crée pas une nouvelle.
 
 Réponds UNIQUEMENT JSON sans backticks:
-{"numero":"${num}","date":"${today}","validite":"3 mois","entreprise":{"nom":"","siret":"","tel":"","adresse":"","email":""},"client":{"nom":"","email":""},"chantier":{"adresse":"","nature":"","delai":""},"sections":[{"metier":"Carrelage / Sols","emoji":"🪨","postes":[{"id":1,"titre":"","description":"","qte":1,"unite":"Forfait","pu_ht":0,"total_ht":0}]}],"total_ht":0,"tva_pct":${tva},"tva_montant":0,"total_ttc":0,"total_lettres":"","mentions":"${gMentions||'TVA '+tva+'% applicable'}","conditions":"30% à la commande, solde à réception et levée des réserves"}
+{"numero":"${num}","date":"${today}","validite":"${validiteDevis}","entreprise":{"nom":"","siret":"","tel":"","adresse":"","email":""},"client":{"nom":"","email":""},"chantier":{"adresse":"","nature":"","delai":""},"sections":[{"metier":"Carrelage / Sols","emoji":"🪨","postes":[{"id":1,"titre":"","description":"","qte":1,"unite":"Forfait","pu_ht":0,"total_ht":0}]}],"total_ht":0,"tva_pct":${tva},"tva_montant":0,"total_ttc":0,"total_lettres":"","mentions":"${gMentions||'TVA '+tva+'% applicable'}","conditions":"${conditionsDevis}"}
 RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dictés. Si un sous-poste n'a pas de prix dicté, regroupe-le dans la description du poste principal. Pour l'unité: utiliser "m²" pour les surfaces, "ml" pour les linéaires, "h" pour les heures, "Forfait" pour tout le reste (dépose, installation, prestation globale). Ne jamais utiliser "ens".`;
 
-  const structureJSON=`{"numero":"${num}","date":"${today}","validite":"3 mois","entreprise":{"nom":"${entNom}","siret":"${entSiret}","tel":"${entTel}","adresse":"","email":"${entEmail}"},"client":{"nom":"${clientNom}","email":"${clientEmail}"},"chantier":{"adresse":"${chantierAdr}","nature":"${nature}","delai":"${delai}"},"sections":[{"metier":"Carrelage / Sols","emoji":"🪨","postes":[{"id":1,"titre":"","description":"","qte":1,"unite":"Forfait","pu_ht":0,"total_ht":0}]}],"total_ht":0,"tva_pct":${tva},"tva_montant":0,"total_ttc":0,"total_lettres":"","mentions":"${gMentions||'TVA '+tva+'% applicable'}","conditions":"30% à la commande, solde à réception et levée des réserves"}`;
+  const structureJSON=`{"numero":"${num}","date":"${today}","validite":"${validiteDevis}","entreprise":{"nom":"${entNom}","siret":"${entSiret}","tel":"${entTel}","adresse":"","email":"${entEmail}"},"client":{"nom":"${clientNom}","email":"${clientEmail}"},"chantier":{"adresse":"${chantierAdr}","nature":"${nature}","delai":"${delai}"},"sections":[{"metier":"Carrelage / Sols","emoji":"🪨","postes":[{"id":1,"titre":"","description":"","qte":1,"unite":"Forfait","pu_ht":0,"total_ht":0}]}],"total_ht":0,"tva_pct":${tva},"tva_montant":0,"total_ttc":0,"total_lettres":"","mentions":"${gMentions||'TVA '+tva+'% applicable'}","conditions":"${conditionsDevis}"}`;
 
   try{
     for(let i=0;i<passes.length;i++){
@@ -1010,11 +1060,8 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
       try{parsed=JSON.parse(clean);}catch(pe){throw new Error('JSON invalide passe '+(i+1)+' — réessayez');}
 
       if(estDernierePasse){
-        // Dernière passe : JSON complet avec totaux
-        // Fusion des sections des passes précédentes
         if(toutesLesSections.length>0){
           parsed.sections=fusionnerSections([...toutesLesSections,...(parsed.sections||[])]);
-          // Recalcul totaux
           const totalHT=parsed.sections.reduce((a,s)=>a+s.postes.reduce((b,p)=>b+Number(p.total_ht),0),0);
           const tvaMontant=totalHT*(Number(parsed.tva_pct||tva)/100);
           parsed.total_ht=Math.round(totalHT*100)/100;
@@ -1022,12 +1069,28 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
           parsed.total_ttc=Math.round((totalHT+tvaMontant)*100)/100;
         }
         showProgress(totalPasses,totalPasses,'✅ Finalisation…');
+
+        // Injecter les champs supplémentaires
+        parsed.validite      = validiteDevis;
+        parsed.date_debut    = dateDebutFmt;
+        parsed.acompte_pct   = acomptePct;
+        parsed.acompte_montant = acomptePct > 0
+          ? Math.round(parsed.total_ttc * acomptePct / 100 * 100) / 100
+          : 0;
+        // Conditions finales avec montant calculé
+        if(acomptePct > 0) {
+          parsed.conditions = `${acomptePct}% à la commande (${fmt(parsed.acompte_montant)} € TTC), solde à réception et levée des réserves`;
+        } else {
+          parsed.conditions = 'Solde à réception et levée des réserves';
+        }
+
         devisData=parsed;
         renderDevis(parsed);
         document.getElementById('result-box').style.display='block';
         showS('success','✅ Devis généré avec succès !');
         setTimeout(()=>document.getElementById('result-box').scrollIntoView({behavior:'smooth'}),200);
-        // Enrichir le JSON avec RIB et décennale avant sauvegarde
+
+        // Enrichir avec RIB, décennale, logo avant sauvegarde
         parsed.iban      = ls('ent-iban')||'';
         parsed.bic       = ls('ent-bic')||'';
         parsed.banque    = ls('ent-banque')||'';
@@ -1041,7 +1104,6 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
           clientEmail:document.getElementById('client-email').value||''
         })}).catch(()=>{});
       } else {
-        // Passes intermédiaires : accumule les sections
         const sections=parsed.sections||[];
         sections.forEach(s=>{
           s.postes.forEach(p=>{ p.id=idCounter++; });
@@ -1057,7 +1119,6 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
 }
 
 function renderDevis(d){
-  // Support ancien format (postes) et nouveau format (sections)
   let sectionsHtml='';
   if(d.sections && d.sections.length){
     sectionsHtml=d.sections.map(s=>{
@@ -1087,13 +1148,27 @@ function renderDevis(d){
         </tr>`;
     }).join('');
   } else {
-    // Fallback ancien format
     sectionsHtml=(d.postes||[]).map(p=>`<tr><td><div class="ptit">${p.id ? p.id+'. ' : ''}${p.titre}</div><div class="pdesc">${p.description}</div></td><td style="text-align:center">${p.qte}</td><td style="text-align:center">${p.unite}</td><td style="text-align:right">${fmt(p.pu_ht)}</td><td style="text-align:right"><strong>${fmt(p.total_ht)}</strong></td></tr>`).join('');
   }
 
+  // Ligne acompte — uniquement si > 0
+  const acomptePct    = d.acompte_pct || 0;
+  const acompteMontant = d.acompte_montant || 0;
+  const acompteHtml = acomptePct > 0
+    ? `<div class="trow" style="color:var(--orange);font-size:13px;font-weight:600;padding:5px 0">
+        <span>Acompte ${acomptePct}%</span>
+        <span>${fmt(acompteMontant)} €</span>
+       </div>`
+    : '';
+
+  // Date de début
+  const dateDebutHtml = d.date_debut
+    ? `&nbsp;&nbsp;|&nbsp;&nbsp;<strong>Début :</strong> ${d.date_debut}`
+    : '';
+
   document.getElementById('devis-preview').innerHTML=`
   <h1>DEVIS N° ${d.numero}</h1>
-  <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}</div>
+  <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}${dateDebutHtml}</div>
   <div class="hgrid">
     <div class="iblk"><h2>Entreprise</h2><p><strong>${d.entreprise.nom}</strong><br>${d.entreprise.siret?'SIRET : '+d.entreprise.siret+'<br>':''}${d.entreprise.tel?'📞 '+d.entreprise.tel+'<br>':''}${d.entreprise.adresse?'📍 '+d.entreprise.adresse+'<br>':''}${d.entreprise.email?'✉️ '+d.entreprise.email:''}</p></div>
     <div class="iblk"><h2>Maître d'Ouvrage</h2><p><strong>${d.client.nom}</strong><br>${d.client.email?'✉️ '+d.client.email+'<br>':''}${d.chantier.adresse?'<br>📍 '+d.chantier.adresse:''}</p></div>
@@ -1106,6 +1181,7 @@ function renderDevis(d){
       <div class="trow"><span>Total HT</span><span>${fmt(d.total_ht)} €</span></div>
       <div class="trow"><span>TVA ${d.tva_pct}%</span><span>${fmt(d.tva_montant)} €</span></div>
       <div class="trow"><span>TOTAL TTC</span><span>${fmt(d.total_ttc)} €</span></div>
+      ${acompteHtml}
     </div>
   </div>
   <div class="cond-box"><strong>Conditions :</strong> ${d.conditions}<br>${gMentions}${gDecCompagnie ? "<br>🛡️ Assurance décennale : "+gDecCompagnie+(gDecNumero?" — Police n° "+gDecNumero:"") : ""}</div>
@@ -1124,7 +1200,6 @@ async function envoyerDevis(){
   const d=devisData;
   const exp=document.getElementById('email-exp').value||'onboarding@resend.dev';
 
-  // Générer les lignes email avec sections
   let rowsHtml='';
   if(d.sections && d.sections.length){
     d.sections.forEach(s=>{
@@ -1143,12 +1218,20 @@ async function envoyerDevis(){
   const artisanNom=ls('ent-nom')||'Votre artisan';
   const montantTTC=fmt(d.total_ttc)+' €';
 
-  // Lien de confirmation — pointe vers la page accept.html sur Netlify
+  // Ligne acompte email
+  const acomptePct = d.acompte_pct || 0;
+  const acompteEmailHtml = acomptePct > 0
+    ? `<tr><td style="padding:3px 14px 3px 0;color:#666">Acompte ${acomptePct}%</td><td style="padding:3px 0;font-weight:600;color:#FF4500">${fmt(d.acompte_montant)} €</td></tr>`
+    : '';
+
+  // Date de début email
+  const dateDebutEmailHtml = d.date_debut
+    ? `<br><strong>Début des travaux :</strong> ${d.date_debut}` : '';
+
   const acceptUrl=`${window.location.origin}/accept.html?numero=${encodeURIComponent(d.numero)}&client=${encodeURIComponent(d.client.nom)}&artisan=${encodeURIComponent(artisanNom)}&artisanEmail=${encodeURIComponent(artisanEmail)}&montant=${encodeURIComponent(montantTTC)}&resendKey=${encodeURIComponent(rk)}`;
-  // Lien PDF — pointe vers la page devis-pdf.html
   const pdfUrl=`${window.location.origin}/devis-pdf.html?id=${encodeURIComponent(d.numero)}`;
 
-  const html=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#222"><div style="background:#FF4500;padding:18px 22px;border-radius:8px 8px 0 0"><h1 style="color:#fff;font-size:20px;margin:0">DEVIS N° ${d.numero}</h1><p style="color:rgba(255,255,255,.85);margin:3px 0 0;font-size:12px">Date : ${d.date} — Validité : ${d.validite}</p></div><div style="background:#fff;padding:22px;border:1px solid #eee;border-top:none"><table style="width:100%;font-size:12px;margin-bottom:18px"><tr><td style="width:50%;vertical-align:top;padding-right:10px"><strong style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#999">Entreprise</strong><br><br><strong>${d.entreprise.nom}</strong><br>${d.entreprise.siret?'SIRET : '+d.entreprise.siret+'<br>':''}${d.entreprise.tel?d.entreprise.tel+'<br>':''}</td><td style="width:50%;vertical-align:top;background:#f9f9f9;padding:10px;border-radius:6px"><strong style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#999">Maître d'Ouvrage</strong><br><br><strong>${d.client.nom}</strong><br>${d.chantier.adresse||''}</td></tr></table><p style="font-size:12px;margin-bottom:14px"><strong>Nature :</strong> ${d.chantier.nature} &nbsp;|&nbsp; <strong>Délai :</strong> ${d.chantier.delai}</p><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:18px"><thead><tr style="background:#FF4500;color:#fff"><th style="padding:8px;text-align:left">Désignation</th><th style="padding:8px;text-align:center">Qté</th><th style="padding:8px;text-align:center">Unité</th><th style="padding:8px;text-align:right">P.U. HT</th><th style="padding:8px;text-align:right">Total HT</th></tr></thead><tbody>${rowsHtml}</tbody></table><div style="text-align:right;margin-bottom:16px"><table style="margin-left:auto;font-size:12px;border-collapse:collapse"><tr><td style="padding:3px 14px 3px 0;color:#666">Total HT</td><td style="padding:3px 0;font-weight:600">${fmt(d.total_ht)} €</td></tr><tr><td style="padding:3px 14px 3px 0;color:#666">TVA ${d.tva_pct}%</td><td style="padding:3px 0;font-weight:600">${fmt(d.tva_montant)} €</td></tr><tr style="border-top:2px solid #FF4500"><td style="padding:7px 14px 3px 0;font-weight:700;font-size:14px">TOTAL TTC</td><td style="padding:7px 0 3px;font-weight:700;font-size:14px;color:#FF4500">${fmt(d.total_ttc)} €</td></tr></table></div><p style="font-size:11px;color:#999;font-style:italic;margin-bottom:14px">Arrêté à : ${d.total_lettres}</p><div style="background:#f5f5f5;padding:10px 12px;border-radius:6px;font-size:11px;color:#777">${d.conditions}<br>${gMentions}</div>
+  const html=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#222"><div style="background:#FF4500;padding:18px 22px;border-radius:8px 8px 0 0"><h1 style="color:#fff;font-size:20px;margin:0">DEVIS N° ${d.numero}</h1><p style="color:rgba(255,255,255,.85);margin:3px 0 0;font-size:12px">Date : ${d.date} — Validité : ${d.validite}</p></div><div style="background:#fff;padding:22px;border:1px solid #eee;border-top:none"><table style="width:100%;font-size:12px;margin-bottom:18px"><tr><td style="width:50%;vertical-align:top;padding-right:10px"><strong style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#999">Entreprise</strong><br><br><strong>${d.entreprise.nom}</strong><br>${d.entreprise.siret?'SIRET : '+d.entreprise.siret+'<br>':''}${d.entreprise.tel?d.entreprise.tel+'<br>':''}</td><td style="width:50%;vertical-align:top;background:#f9f9f9;padding:10px;border-radius:6px"><strong style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#999">Maître d'Ouvrage</strong><br><br><strong>${d.client.nom}</strong><br>${d.chantier.adresse||''}</td></tr></table><p style="font-size:12px;margin-bottom:14px"><strong>Nature :</strong> ${d.chantier.nature} &nbsp;|&nbsp; <strong>Délai :</strong> ${d.chantier.delai}${dateDebutEmailHtml}</p><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:18px"><thead><tr style="background:#FF4500;color:#fff"><th style="padding:8px;text-align:left">Désignation</th><th style="padding:8px;text-align:center">Qté</th><th style="padding:8px;text-align:center">Unité</th><th style="padding:8px;text-align:right">P.U. HT</th><th style="padding:8px;text-align:right">Total HT</th></tr></thead><tbody>${rowsHtml}</tbody></table><div style="text-align:right;margin-bottom:16px"><table style="margin-left:auto;font-size:12px;border-collapse:collapse"><tr><td style="padding:3px 14px 3px 0;color:#666">Total HT</td><td style="padding:3px 0;font-weight:600">${fmt(d.total_ht)} €</td></tr><tr><td style="padding:3px 14px 3px 0;color:#666">TVA ${d.tva_pct}%</td><td style="padding:3px 0;font-weight:600">${fmt(d.tva_montant)} €</td></tr><tr style="border-top:2px solid #FF4500"><td style="padding:7px 14px 3px 0;font-weight:700;font-size:14px">TOTAL TTC</td><td style="padding:7px 0 3px;font-weight:700;font-size:14px;color:#FF4500">${fmt(d.total_ttc)} €</td></tr>${acompteEmailHtml}</table></div><p style="font-size:11px;color:#999;font-style:italic;margin-bottom:14px">Arrêté à : ${d.total_lettres}</p><div style="background:#f5f5f5;padding:10px 12px;border-radius:6px;font-size:11px;color:#777">${d.conditions}<br>${gMentions}</div>
   <div style="text-align:center;margin-top:24px;padding:20px;background:#fff8f5;border-radius:8px;border:1px solid #ffd0b0">
     <p style="font-size:13px;color:#555;margin-bottom:14px">Ce devis vous convient ? Acceptez-le en un clic :</p>
     <a href="${acceptUrl}" style="display:inline-block;background:#FF4500;color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:700;font-size:15px;letter-spacing:.5px">✅ Accepter ce devis</a>
@@ -1167,7 +1250,6 @@ async function envoyerDevis(){
 
 async function imprimerDevis(){
   if(!devisData)return;
-  // Même rendu que le PDF client — redirige vers devis-pdf.html
   const pdfUrl=`${window.location.origin}/devis-pdf.html?id=${encodeURIComponent(devisData.numero)}`;
   window.open(pdfUrl,'_blank');
 }
@@ -1175,6 +1257,9 @@ async function imprimerDevis(){
 function nouveauDevis(){
   if(!confirm('Commencer un nouveau devis ?'))return;
   ['client-nom','client-email','chantier-adresse','nature-travaux','delai-execution'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('date-debut').value='';
+  document.getElementById('validite-devis').value='3 mois';
+  document.getElementById('acompte-pct').value='30';
   document.getElementById('dictee-text').innerText='';
   document.getElementById('result-box').style.display='none';
   document.getElementById('sbar').className='sbar';
@@ -1211,7 +1296,6 @@ async function chargerLogoFichier(file){
   } finally {
     document.getElementById('logo-loading').style.display = 'none';
     document.getElementById('logo-dropzone').style.display = 'block';
-    // Reset input pour permettre re-upload du même fichier
     document.getElementById('logo-input').value = '';
   }
 }
@@ -1226,7 +1310,6 @@ function lireEnBase64(file){
 }
 
 async function convertirPDFenImage(file){
-  // Charger PDF.js dynamiquement si pas encore chargé
   if(!window.pdfjsLib){
     await new Promise((resolve, reject) => {
       const script = document.createElement('script');
@@ -1243,7 +1326,6 @@ async function convertirPDFenImage(file){
   const pdfDoc = await window.pdfjsLib.getDocument({data: arrayBuffer}).promise;
   const page = await pdfDoc.getPage(1);
 
-  // Scale 5 pour une haute résolution sans flou
   const scale = 5;
   const viewport = page.getViewport({scale});
 
@@ -1252,13 +1334,11 @@ async function convertirPDFenImage(file){
   canvas.height = viewport.height;
   const ctx = canvas.getContext('2d');
 
-  // Fond blanc
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   await page.render({canvasContext: ctx, viewport}).promise;
 
-  // Rognage automatique des bords blancs
   const cropped = rognerBordsBlancs(canvas);
   return cropped.toDataURL('image/png');
 }
@@ -1269,7 +1349,7 @@ function rognerBordsBlancs(canvas){
   const data = ctx.getImageData(0, 0, width, height).data;
 
   let top = height, bottom = 0, left = width, right = 0;
-  const seuil = 240; // pixel considéré "blanc" si R,G,B > seuil
+  const seuil = 240;
 
   for(let y = 0; y < height; y++){
     for(let x = 0; x < width; x++){
@@ -1284,7 +1364,6 @@ function rognerBordsBlancs(canvas){
     }
   }
 
-  // Marge de 10px autour du logo
   const pad = 10;
   top    = Math.max(0, top - pad);
   bottom = Math.min(height, bottom + pad);
@@ -1293,7 +1372,7 @@ function rognerBordsBlancs(canvas){
 
   const w = right - left;
   const h = bottom - top;
-  if(w <= 0 || h <= 0) return canvas; // Pas de rognage si vide
+  if(w <= 0 || h <= 0) return canvas;
 
   const cropped = document.createElement('canvas');
   cropped.width  = w;
@@ -1342,7 +1421,6 @@ function saveProfil(){
 }
 function saveTarifs(){
   ['t-mo','t-tva'].forEach(id=>{const el=document.getElementById(id);if(el)localStorage.setItem(id,el.value);});
-  // Mentions légales automatiques selon TVA
   const tva=document.getElementById('t-tva').value;
   const mentionsAuto={
     '10':'TVA à taux réduit 10% applicable — Art. 279 du CGI',
@@ -1362,10 +1440,8 @@ function flash(id){const el=document.getElementById(id);el.classList.add('show')
 function loadAll(){
   const map={'ent-nom':'ent-nom','ent-siret':'ent-siret','ent-tel':'ent-tel','ent-adr':'ent-adr','ent-email':'ent-email','mentions':'mentions','resend-key':'resend-key','email-exp':'email-exp','ent-decennale-compagnie':'ent-decennale-compagnie','ent-decennale-numero':'ent-decennale-numero','ent-banque':'ent-banque','ent-iban':'ent-iban','ent-bic':'ent-bic','ent-titulaire':'ent-titulaire','t-mo':'t-mo','t-tva':'t-tva'};
   Object.keys(map).forEach(k=>{const v=localStorage.getItem(k);const el=document.getElementById(map[k]);if(v&&el)el.value=v;});
-  // Charger le logo
   const logoSaved = localStorage.getItem('ent-logo');
   if(logoSaved) afficherLogoPreview(logoSaved);
-  // Charger toutes les prestations sauvegardées en mémoire vive au démarrage
   const cles=Object.keys(localStorage).filter(k=>k.startsWith('prest_'));
   cles.forEach(cle=>{
     try{

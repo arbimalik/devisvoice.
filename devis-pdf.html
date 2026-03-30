@@ -26,7 +26,7 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
   position:fixed;
   top:-9999px;
   left:-9999px;
-  width:794px; /* A4 96dpi */
+  width:794px;
   background:#fff;
   color:#222;
   font-family:'Arial',sans-serif;
@@ -35,247 +35,68 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
 }
 
 /* ===== STYLES DU DEVIS IMPRIMABLE ===== */
-.pdf-wrap{
-  padding:28px 32px;
-}
+.pdf-wrap{padding:28px 32px;}
 
-/* En-tête */
 .pdf-header{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  margin-bottom:20px;
-  padding-bottom:16px;
-  border-bottom:3px solid #FF4500;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:20px;padding-bottom:16px;border-bottom:3px solid #FF4500;
 }
-.pdf-logo{
-  font-family:'Arial Black',sans-serif;
-  font-size:22px;
-  font-weight:900;
-  color:#FF4500;
-  letter-spacing:-0.5px;
-}
+.pdf-logo{font-family:'Arial Black',sans-serif;font-size:22px;font-weight:900;color:#FF4500;letter-spacing:-0.5px;}
 .pdf-logo span{color:#222;}
-.pdf-num{
-  text-align:right;
-}
-.pdf-num h1{
-  font-size:16px;
-  font-weight:800;
-  color:#FF4500;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin-bottom:3px;
-}
-.pdf-num .meta{
-  font-size:10px;
-  color:#999;
-}
+.pdf-num{text-align:right;}
+.pdf-num h1{font-size:16px;font-weight:800;color:#FF4500;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.pdf-num .meta{font-size:10px;color:#999;}
 
-/* Blocs entreprise / client */
-.pdf-parties{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:14px;
-}
-.pdf-bloc{
-  background:#f8f8f8;
-  border-radius:6px;
-  padding:10px 13px;
-  font-size:11px;
-  line-height:1.8;
-}
-.pdf-bloc-label{
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#FF4500;
-  margin-bottom:5px;
-}
-.pdf-bloc strong{
-  font-size:12px;
-  color:#111;
-}
+.pdf-parties{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.pdf-bloc{background:#f8f8f8;border-radius:6px;padding:10px 13px;font-size:11px;line-height:1.8;}
+.pdf-bloc-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF4500;margin-bottom:5px;}
+.pdf-bloc strong{font-size:12px;color:#111;}
 
-/* Nature / délai */
-.pdf-nature{
-  background:#fff3ee;
-  border-left:3px solid #FF4500;
-  padding:8px 12px;
-  font-size:11px;
-  margin-bottom:16px;
-  border-radius:0 6px 6px 0;
-}
+.pdf-nature{background:#fff3ee;border-left:3px solid #FF4500;padding:8px 12px;font-size:11px;margin-bottom:16px;border-radius:0 6px 6px 0;}
 
-/* Titre section */
-.pdf-section-title{
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#999;
-  margin-bottom:6px;
-  margin-top:4px;
-}
+.pdf-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:6px;margin-top:4px;}
 
-/* Tableau */
-.pdf-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-bottom:0;
-  font-size:11px;
-}
-.pdf-table th{
-  background:#FF4500;
-  color:#fff;
-  padding:7px 8px;
-  text-align:left;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:0.5px;
-}
-.pdf-table th:nth-child(2),
-.pdf-table th:nth-child(3){text-align:center;}
-.pdf-table th:nth-child(4),
-.pdf-table th:nth-child(5){text-align:right;}
-
-.pdf-table td{
-  padding:6px 8px;
-  border-bottom:1px solid #f0f0f0;
-  vertical-align:top;
-}
+.pdf-table{width:100%;border-collapse:collapse;margin-bottom:0;font-size:11px;}
+.pdf-table th{background:#FF4500;color:#fff;padding:7px 8px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.5px;}
+.pdf-table th:nth-child(2),.pdf-table th:nth-child(3){text-align:center;}
+.pdf-table th:nth-child(4),.pdf-table th:nth-child(5){text-align:right;}
+.pdf-table td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top;}
 .pdf-table tr.row-even td{background:#fafafa;}
 .pdf-table tr.row-odd td{background:#fff;}
-
 .pdf-table .td-qte{text-align:center;}
 .pdf-table .td-unite{text-align:center;}
 .pdf-table .td-pu{text-align:right;}
 .pdf-table .td-total{text-align:right;font-weight:700;}
 
-/* En-tête de section dans le tableau */
-.sec-row td{
-  background:#fff3ee !important;
-  padding:8px 8px 6px;
-  border-bottom:none;
-}
-.sec-row-label{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:#FF4500;
-}
+.sec-row td{background:#fff3ee !important;padding:8px 8px 6px;border-bottom:none;}
+.sec-row-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#FF4500;}
 
-/* Sous-total section */
-.subtotal-row td{
-  background:#fff !important;
-  border-top:1px solid #eee;
-  border-bottom:2px solid #FF4500 !important;
-  padding:5px 8px 8px;
-}
-.subtotal-row .subtotal-label{
-  text-align:right;
-  font-size:10px;
-  color:#999;
-  font-style:italic;
-}
-.subtotal-row .subtotal-val{
-  text-align:right;
-  font-size:11px;
-  font-weight:700;
-  color:#333;
-}
+.subtotal-row td{background:#fff !important;border-top:1px solid #eee;border-bottom:2px solid #FF4500 !important;padding:5px 8px 8px;}
+.subtotal-row .subtotal-label{text-align:right;font-size:10px;color:#999;font-style:italic;}
+.subtotal-row .subtotal-val{text-align:right;font-size:11px;font-weight:700;color:#333;}
 
-/* Titre poste */
 .poste-titre{font-weight:700;color:#111;font-size:11px;}
 .poste-desc{font-size:10px;color:#888;margin-top:2px;}
 
-/* Totaux */
-.pdf-totaux-wrap{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:16px;
-  margin-bottom:4px;
-}
-.pdf-totaux{
-  width:240px;
-  border:1px solid #eee;
-  border-radius:8px;
-  overflow:hidden;
-}
-.pdf-trow{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:6px 12px;
-  font-size:12px;
-  border-bottom:1px solid #f0f0f0;
-}
-.pdf-trow:last-child{
-  border:none;
-  background:#FF4500;
-  color:#fff;
-  font-weight:800;
-  font-size:14px;
-  padding:9px 12px;
-}
+.pdf-totaux-wrap{display:flex;justify-content:flex-end;margin-top:16px;margin-bottom:4px;}
+.pdf-totaux{width:240px;border:1px solid #eee;border-radius:8px;overflow:hidden;}
+.pdf-trow{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;}
+.pdf-trow:last-child{border:none;background:#FF4500;color:#fff;font-weight:800;font-size:14px;padding:9px 12px;}
 .pdf-trow-label{color:#666;}
 .pdf-trow:last-child .pdf-trow-label{color:#fff;}
+/* Ligne acompte en orange discret */
+.pdf-trow-acompte{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;background:#fff8f5;color:#FF4500;font-weight:700;}
 
-/* Montant en lettres */
-.pdf-lettres{
-  text-align:right;
-  font-style:italic;
-  font-size:10px;
-  color:#999;
-  margin-top:6px;
-  margin-bottom:16px;
-}
+.pdf-lettres{text-align:right;font-style:italic;font-size:10px;color:#999;margin-top:6px;margin-bottom:16px;}
 
-/* Conditions + mentions */
-.pdf-footer-bloc{
-  background:#f8f8f8;
-  border-radius:6px;
-  padding:10px 13px;
-  font-size:10px;
-  color:#666;
-  line-height:1.8;
-  margin-bottom:10px;
-}
+.pdf-footer-bloc{background:#f8f8f8;border-radius:6px;padding:10px 13px;font-size:10px;color:#666;line-height:1.8;margin-bottom:10px;}
 .pdf-footer-bloc strong{color:#333;font-size:11px;}
 
-/* RIB */
-.pdf-rib{
-  background:#f0f7ff;
-  border-left:3px solid #4a90d9;
-  border-radius:0 6px 6px 0;
-  padding:9px 12px;
-  font-size:10px;
-  color:#444;
-  line-height:1.8;
-  margin-bottom:10px;
-}
+.pdf-rib{background:#f0f7ff;border-left:3px solid #4a90d9;border-radius:0 6px 6px 0;padding:9px 12px;font-size:10px;color:#444;line-height:1.8;margin-bottom:10px;}
 .pdf-rib strong{color:#111;}
 
-/* Signature */
-.pdf-signature{
-  margin-top:16px;
-  padding-top:14px;
-  border-top:1px dashed #ddd;
-  text-align:center;
-  font-size:10px;
-  color:#aaa;
-}
-
-/* Pied de page */
-.pdf-credit{
-  margin-top:12px;
-  text-align:center;
-  font-size:9px;
-  color:#ccc;
-}
+.pdf-signature{margin-top:16px;padding-top:14px;border-top:1px dashed #ddd;text-align:center;font-size:10px;color:#aaa;}
+.pdf-credit{margin-top:12px;text-align:center;font-size:9px;color:#ccc;}
 </style>
 </head>
 <body>
@@ -310,7 +131,7 @@ function fmt(n){
   return Number(n).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
-// ===== MONTANT EN LETTRES (corrigé) =====
+// ===== MONTANT EN LETTRES =====
 function nombreEnLettres(n){
   const nb = Math.round(n * 100) / 100;
   const entier = Math.floor(nb);
@@ -351,7 +172,6 @@ function nombreEnLettres(n){
   }
 
   let res = milliers(entier);
-  // Majuscule première lettre
   res = res.charAt(0).toUpperCase() + res.slice(1);
   if(centimes > 0){
     res += ' euro' + (entier > 1 ? 's' : '') + ' et ' + dizaines(centimes) + ' centime' + (centimes > 1 ? 's' : '');
@@ -363,18 +183,32 @@ function nombreEnLettres(n){
 
 // ===== RENDU HTML DU DEVIS =====
 function renderHtml(d){
-  // Données entreprise
   const ent = d.entreprise || {};
   const client = d.client || {};
   const chantier = d.chantier || {};
 
-  // Décennale et RIB depuis les données ou champs globaux
   const decCompagnie = d.decennale_compagnie || ent.decennale_compagnie || '';
   const decNumero    = d.decennale_numero    || ent.decennale_numero    || '';
   const banque       = d.banque   || ent.banque   || '';
   const iban         = d.iban     || ent.iban     || '';
   const bic          = d.bic      || ent.bic      || '';
   const titulaire    = d.titulaire|| ent.titulaire|| '';
+
+  // Acompte — uniquement si > 0
+  const acomptePct    = d.acompte_pct || 0;
+  const acompteMontant = d.acompte_montant || 0;
+  const acompteHtml = acomptePct > 0
+    ? `<div class="pdf-trow-acompte">
+        <span>Acompte ${acomptePct}%</span>
+        <span>${fmt(acompteMontant)} €</span>
+       </div>`
+    : '';
+
+  // Date de début
+  const dateDebut = d.date_debut || '';
+  const dateDebutHtml = dateDebut
+    ? `&nbsp;&nbsp;|&nbsp;&nbsp;<strong>Début :</strong> ${dateDebut}`
+    : '';
 
   // Tableau des postes avec sections
   let sectionsHtml = '';
@@ -384,12 +218,10 @@ function renderHtml(d){
     d.sections.forEach(s => {
       const sousTotalSection = s.postes.reduce((a,p) => a + Number(p.total_ht), 0);
 
-      // Ligne en-tête de section
       sectionsHtml += `<tr class="sec-row">
         <td colspan="5"><span class="sec-row-label">${s.emoji || ''} ${s.metier}</span></td>
       </tr>`;
 
-      // Lignes postes
       s.postes.forEach((p, i) => {
         rowCounter++;
         const rowClass = rowCounter % 2 === 0 ? 'row-even' : 'row-odd';
@@ -405,7 +237,6 @@ function renderHtml(d){
         </tr>`;
       });
 
-      // Ligne sous-total section
       sectionsHtml += `<tr class="subtotal-row">
         <td colspan="4" class="subtotal-label">Sous-total ${s.metier}</td>
         <td class="subtotal-val">${fmt(sousTotalSection)} €</td>
@@ -413,11 +244,9 @@ function renderHtml(d){
     });
   }
 
-  // Montant en lettres calculé côté client (fiable)
   const totalTTC = Number(d.total_ttc) || 0;
   const lettres = nombreEnLettres(totalTTC);
 
-  // RIB bloc
   const ribHtml = iban ? `
     <div class="pdf-rib">
       <strong>🏦 Coordonnées bancaires</strong><br>
@@ -425,10 +254,8 @@ function renderHtml(d){
       IBAN : ${iban}${bic ? ' — BIC : ' + bic : ''}${titulaire ? '<br>Titulaire : ' + titulaire : ''}
     </div>` : '';
 
-  // Décennale
   const decHtml = decCompagnie ? `<br>🛡️ Assurance décennale : ${decCompagnie}${decNumero ? ' — Police n° ' + decNumero : ''}` : '';
 
-  // Logo ou nom entreprise
   const logoHtml = d.logo
     ? `<img src="${d.logo}" style="max-height:52px;max-width:160px;object-fit:contain;">`
     : `<div style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;color:#111;letter-spacing:-0.5px">${ent.nom || 'Votre Entreprise'}</div>`;
@@ -441,7 +268,7 @@ function renderHtml(d){
       <div class="pdf-logo">${logoHtml}</div>
       <div class="pdf-num">
         <h1>DEVIS N° ${d.numero}</h1>
-        <div class="meta">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}</div>
+        <div class="meta">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}${dateDebutHtml}</div>
       </div>
     </div>
 
@@ -468,6 +295,7 @@ function renderHtml(d){
       <strong>Nature des travaux :</strong> ${chantier.nature || '—'}
       &nbsp;&nbsp;|&nbsp;&nbsp;
       <strong>Délai :</strong> ${chantier.delai || '—'}
+      ${dateDebut ? '&nbsp;&nbsp;|&nbsp;&nbsp;<strong>Début :</strong> ' + dateDebut : ''}
     </div>
 
     <!-- TABLEAU DESCRIPTIF -->
@@ -500,15 +328,16 @@ function renderHtml(d){
           <span class="pdf-trow-label">TOTAL TTC</span>
           <span>${fmt(d.total_ttc)} €</span>
         </div>
+        ${acompteHtml}
       </div>
     </div>
 
-    <!-- MONTANT EN LETTRES (calculé côté client, toujours juste) -->
+    <!-- MONTANT EN LETTRES -->
     <div class="pdf-lettres">Arrêté à : <em>${lettres}</em></div>
 
     <!-- CONDITIONS -->
     <div class="pdf-footer-bloc">
-      <strong>Conditions :</strong> ${d.conditions || '30% à la commande, solde à réception et levée des réserves'}<br>
+      <strong>Conditions :</strong> ${d.conditions || 'Solde à réception et levée des réserves'}<br>
       ${d.mentions || ''}${decHtml}
     </div>
 
@@ -534,17 +363,15 @@ async function telecharger(){
   el.style.display = 'block';
   renderHtml(devisData);
 
-  // Attendre que le DOM soit rendu
   await new Promise(r => setTimeout(r, 600));
 
   const pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
-  const pageW   = pdf.internal.pageSize.getWidth();   // 210mm
-  const pageH   = pdf.internal.pageSize.getHeight();  // 297mm
+  const pageW   = pdf.internal.pageSize.getWidth();
+  const pageH   = pdf.internal.pageSize.getHeight();
   const margin  = 12;
   const contentW = pageW - margin * 2;
   const scale   = 2;
 
-  // Calculer les safe breaks AVANT html2canvas (l'élément doit être visible)
   const safeRows = el.querySelectorAll('tr, .pdf-footer-bloc, .pdf-rib, .pdf-signature, .pdf-lettres, .pdf-totaux-wrap');
   const elRect = el.getBoundingClientRect();
   const safeBreaks = [];
@@ -555,7 +382,6 @@ async function telecharger(){
   });
   safeBreaks.sort((a,b) => a - b);
 
-  // Capture complète du devis
   const fullCanvas = await html2canvas(el, {
     scale,
     backgroundColor:'#ffffff',
@@ -565,10 +391,8 @@ async function telecharger(){
   });
   el.style.display = 'none';
 
-  // Hauteur d'une page en pixels canvas
   const pageHeightPx = (pageH - margin * 2) * (fullCanvas.width / contentW);
 
-  // Découpe et ajout des pages
   let pageStart = 0;
   let pageNum   = 0;
 
@@ -578,7 +402,6 @@ async function telecharger(){
     let pageEnd = pageStart + pageHeightPx;
 
     if(pageEnd < fullCanvas.height){
-      // Cherche le dernier safe break avant pageEnd
       let bestBreak = pageEnd;
       for(let i = safeBreaks.length - 1; i >= 0; i--){
         if(safeBreaks[i] <= pageEnd && safeBreaks[i] > pageStart){
