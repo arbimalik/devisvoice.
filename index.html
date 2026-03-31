@@ -19,26 +19,22 @@
   --logo-txt:#fff;
 }
 [data-theme="light-orange"] {
-  --bg:#f7f7f7;--bg2:#fff;--bg3:#efefef;--border:#e0e0e0;
-  --text:#111;--text2:#777;--card:#fff;--input-bg:#f7f7f7;
-  --nav:#fff;--tab-bg:#f0f0f0;--shadow:0 4px 24px rgba(0,0,0,0.08);
-  --accent:#FF4500;--accent2:#ff6a35;--accent-bg:rgba(255,69,0,.07);
-  --accent-border:rgba(255,69,0,.2);--nav-border:rgba(255,69,0,.15);
-  --logo-txt:#111;
+  --bg:#f0ebe3;--bg2:#fff;--bg3:#e8e0d5;--border:#d8d0c5;
+  --text:#1a1a1a;--text2:#888;--card:#fff;--input-bg:#faf7f3;
+  --nav:#111;--tab-bg:#e8e0d5;--shadow:0 4px 24px rgba(0,0,0,0.08);
+  --accent:#FF4500;--accent2:#ff6a35;--accent-rgb:255,69,0;--on-accent:#fff;
 }
 [data-theme="light-blue"] {
-  --bg:#f0f4fb;--bg2:#fff;--bg3:#e8eef8;--border:#d0daea;
-  --text:#0f1b2d;--text2:#6b7a99;--card:#fff;--input-bg:#f0f4fb;
-  --nav:#fff;--tab-bg:#e8eef8;--shadow:0 4px 24px rgba(15,27,45,0.08);
-  --accent:#1a6ef5;--accent2:#4d8fff;--accent-bg:rgba(26,110,245,.07);
-  --accent-border:rgba(26,110,245,.2);--nav-border:rgba(26,110,245,.15);
-  --logo-txt:#0f1b2d;
+  --bg:#f0ebe3;--bg2:#fff;--bg3:#e8e0d5;--border:#d8d0c5;
+  --text:#0d1b2e;--text2:#6b82a0;--card:#fff;--input-bg:#faf7f3;
+  --nav:#0d1b2e;--tab-bg:#e8e0d5;--shadow:0 4px 24px rgba(13,27,46,0.10);
+  --accent:#1d6fd8;--accent2:#3a8eff;--accent-rgb:29,111,216;--on-accent:#fff;
 }
 [data-theme="light-green"] {
-  --bg:#0d0d0d;--bg2:#161616;--bg3:#1e1e1e;--border:#2a2a2a;
-  --text:#f0ebe3;--text2:#a89880;--card:#161616;--input-bg:#1e1e1e;
-  --nav:#080808;--tab-bg:#111;--shadow:0 4px 24px rgba(0,0,0,0.4);
-  --accent:#c9a96e;--accent2:#e0c080;--accent-rgb:201,169,110;--on-accent:#111;
+  --bg:#f0ebe3;--bg2:#fff;--bg3:#e8e0d5;--border:#d8d0c5;
+  --text:#0d1b2e;--text2:#6b82a0;--card:#fff;--input-bg:#faf7f3;
+  --nav:#0d1b2e;--tab-bg:#e8e0d5;--shadow:0 4px 24px rgba(13,27,46,0.10);
+  --accent:#1d6fd8;--accent2:#3a8eff;--accent-rgb:29,111,216;--on-accent:#fff;
 }
 
 :root{--radius:12px;--rsm:8px;}
@@ -198,10 +194,10 @@ select option{background:var(--card);color:var(--text);}
   <div class="logo">Devis<span>Voice</span></div>
   <div class="nav-right">
     <div class="theme-sw">
-      <button class="tbtn" onclick="setTheme('dark-orange',this)" title="Nuit / Orange"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
-      <button class="tbtn" onclick="setTheme('light-orange',this)" title="Beige / Orange"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg></button>
-      <button class="tbtn" onclick="setTheme('light-blue',this)" title="Beige / Bleu"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2 10c2-3 4-4 6-4s4 2 6 2 4-2 6-2v3c-2 0-4 2-6 2s-4-2-6-2-4 2-6 2v-3zm0 6c2-3 4-4 6-4s4 2 6 2 4-2 6-2v3c-2 0-4 2-6 2s-4-2-6-2-4 2-6 2v-3z"/></svg></button>
-      <button class="tbtn" onclick="setTheme('light-green',this)" title="Noir / Beige"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 2a6 6 0 0 0-5.81 7.54l-7.1 7.1a1.5 1.5 0 0 0 0 2.12l2.12 2.12a1.5 1.5 0 0 0 2.12 0l7.1-7.1A6 6 0 1 0 16 2zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg></button>
+      <button class="tbtn" onclick="setTheme('dark-orange',this)" title="Nuit / Orange" style="color:#a8b8d0"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+      <button class="tbtn" onclick="setTheme('light-orange',this)" title="Beige / Orange" style="color:#f5c842"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg></button>
+      <button class="tbtn" onclick="setTheme('light-blue',this)" title="Beige / Bleu" style="color:#3a8eff"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2 10c2-3 4-4 6-4s4 2 6 2 4-2 6-2v3c-2 0-4 2-6 2s-4-2-6-2-4 2-6 2v-3zm0 6c2-3 4-4 6-4s4 2 6 2 4-2 6-2v3c-2 0-4 2-6 2s-4-2-6-2-4 2-6 2v-3z"/></svg></button>
+      <button class="tbtn" onclick="setTheme('light-green',this)" title="Noir / Beige" style="color:#c9a96e"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 2a6 6 0 0 0-5.81 7.54l-7.1 7.1a1.5 1.5 0 0 0 0 2.12l2.12 2.12a1.5 1.5 0 0 0 2.12 0l7.1-7.1A6 6 0 1 0 16 2zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg></button>
     </div>
     <button class="btn-agent">Agent Bâtiment</button>
   </div>
