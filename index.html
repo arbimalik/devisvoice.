@@ -235,8 +235,11 @@ select option{background:var(--card);color:var(--text);}
   </div>
 
   <div class="card">
-    <div class="card-header ch-dark">🔧 Corps de Métier &amp; Prestations</div>
-    <div class="card-body">
+    <div class="card-header ch-dark" style="cursor:pointer;justify-content:space-between;" onclick="toggleMetiers()">
+      <span>🔧 Corps de Métier &amp; Prestations</span>
+      <span id="metiers-toggle-icon" style="font-size:14px;transition:transform .3s;">▲</span>
+    </div>
+    <div id="metiers-body" class="card-body">
       <div class="metiers-grid" id="metiers-grid">
         <div class="mc" onclick="selMetier(this,'carrelage')" data-m="Carrelage / Sols">🪨 Carrelage</div>
         <div class="mc" onclick="selMetier(this,'plomberie')" data-m="Plomberie / Sanitaire">🚿 Plomberie</div>
@@ -280,11 +283,12 @@ select option{background:var(--card);color:var(--text);}
         </div>
         <div class="mic-lbl" id="mic-lbl">Appuyez pour dicter</div>
       </div>
-      <div id="dictee-text" class="dictee-box" contenteditable="true" data-ph="Votre dictée apparaît ici — ou tapez directement..."></div>
+      <div id="dictee-text" class="dictee-box" contenteditable="true" data-ph="Votre dictée apparaît ici — ou tapez directement..." oninput="onDicteeChange()"></div>
     </div>
   </div>
 
   <button class="btn-primary" id="btn-gen" onclick="genererDevis()">⚡ Générer le Devis</button>
+  <button class="btn-primary" id="btn-maj" onclick="mettreAJourDevis()" style="display:none;background:var(--bg3);color:var(--orange);border:1.5px solid var(--orange);margin-top:8px;">🔄 Mettre à jour le devis</button>
   <div class="sbar" id="sbar"></div>
 
   <div id="result-box">
@@ -558,6 +562,64 @@ function afficherPrestations(key) {
   zone.style.display = 'block';
 }
 
+function toggleMetiers(){
+  const body = document.getElementById('metiers-body');
+  const icon = document.getElementById('metiers-toggle-icon');
+  const visible = body.style.display !== 'none';
+  body.style.display = visible ? 'none' : 'block';
+  icon.style.transform = visible ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+let dicteeOriginale = '';
+function onDicteeChange(){
+  if(!devisData) return;
+  const current = document.getElementById('dictee-text').innerText.trim();
+  const btn = document.getElementById('btn-maj');
+  btn.style.display = (current !== dicteeOriginale) ? 'flex' : 'none';
+}
+
+async function mettreAJourDevis(){
+  const dictee = document.getElementById('dictee-text').innerText.trim();
+  if(!dictee){ alert('La zone de dictée est vide.'); return; }
+  if(!devisData){ return; }
+  // Réutilise genererDevis mais garde les infos existantes
+  dicteeOriginale = dictee;
+  document.getElementById('btn-maj').style.display = 'none';
+  await genererDevis();
+}
+
+function majPrixPoste(sIdx, pIdx, val){
+  if(!devisData) return;
+  const pu = parseFloat(val) || 0;
+  const poste = devisData.sections[sIdx].postes[pIdx];
+  poste.pu_ht = pu;
+  poste.total_ht = Math.round(pu * poste.qte * 100) / 100;
+  recalculerTotaux();
+  renderDevis(devisData);
+}
+
+function majQtePoste(sIdx, pIdx, val){
+  if(!devisData) return;
+  const qte = parseFloat(val) || 0;
+  const poste = devisData.sections[sIdx].postes[pIdx];
+  poste.qte = qte;
+  poste.total_ht = Math.round(poste.pu_ht * qte * 100) / 100;
+  recalculerTotaux();
+  renderDevis(devisData);
+}
+
+function recalculerTotaux(){
+  if(!devisData) return;
+  const tva = devisData.tva_pct || 10;
+  const totalHT = devisData.sections.reduce((a,s) => a + s.postes.reduce((b,p) => b + Number(p.total_ht), 0), 0);
+  const tvaMontant = totalHT * tva / 100;
+  devisData.total_ht = Math.round(totalHT * 100) / 100;
+  devisData.tva_montant = Math.round(tvaMontant * 100) / 100;
+  devisData.total_ttc = Math.round((totalHT + tvaMontant) * 100) / 100;
+  const acomptePct = devisData.acompte_pct || 0;
+  devisData.acompte_montant = acomptePct > 0 ? Math.round(devisData.total_ttc * acomptePct / 100 * 100) / 100 : 0;
+  devisData.conditions = buildConditions(acomptePct);
+}
 function togglePrestation(key, idx, val) { if(prestationsActives[key]) prestationsActives[key][idx].actif = val; }
 function renommerPrestation(key, idx, val) { if(prestationsActives[key]) prestationsActives[key][idx].nom = val; }
 function supprimerPrestation(key, idx) { if(prestationsActives[key]){prestationsActives[key].splice(idx,1);afficherPrestations(key);} }
@@ -1090,6 +1152,8 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
         }
 
         devisData=parsed;
+        dicteeOriginale = document.getElementById('dictee-text').innerText.trim();
+        document.getElementById('btn-maj').style.display = 'none';
         renderDevis(parsed);
         document.getElementById('result-box').style.display='block';
         showS('success','✅ Devis généré avec succès !');
@@ -1125,17 +1189,23 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
 function renderDevis(d){
   let sectionsHtml='';
   if(d.sections && d.sections.length){
-    sectionsHtml=d.sections.map(s=>{
-      const rows=s.postes.map(p=>`
+    sectionsHtml=d.sections.map((s,sIdx)=>{
+      const rows=s.postes.map((p,pIdx)=>`
         <tr>
           <td style="padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:top">
             <span style="font-size:11px;color:var(--text2);font-weight:600;margin-right:8px">${p.id}.</span>
             <div class="ptit" style="display:inline">${p.titre}</div>
             <div class="pdesc">${p.description}</div>
           </td>
-          <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center">${p.qte}</td>
+          <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center">
+            <input type="number" value="${p.qte}" min="0" step="0.5" onchange="majQtePoste(${sIdx},${pIdx},this.value)"
+              style="width:60px;padding:3px 5px;border:1.5px solid var(--border);border-radius:5px;font-size:12px;background:var(--input-bg);color:var(--text);text-align:center;">
+          </td>
           <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center">${p.unite}</td>
-          <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:right">${fmt(p.pu_ht)}</td>
+          <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:right">
+            <input type="number" value="${p.pu_ht}" min="0" step="0.5" onchange="majPrixPoste(${sIdx},${pIdx},this.value)"
+              style="width:75px;padding:3px 5px;border:1.5px solid var(--border);border-radius:5px;font-size:12px;background:var(--input-bg);color:var(--text);text-align:right;">
+          </td>
           <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:right"><strong>${fmt(p.total_ht)}</strong></td>
         </tr>`).join('');
       const sousTotalSection=s.postes.reduce((a,p)=>a+Number(p.total_ht),0);
