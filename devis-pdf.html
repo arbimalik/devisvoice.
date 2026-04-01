@@ -20,40 +20,20 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
 .btn{display:inline-block;background:#FF4500;color:#fff;border:none;padding:14px 32px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;}
 .btn:hover{background:#ff6a35;}
 
-#devis-container{
-  display:none;
-  position:fixed;
-  top:-9999px;
-  left:-9999px;
-  width:794px;
-  background:#fff;
-  color:#222;
-  font-family:'Arial',sans-serif;
-  font-size:12px;
-  line-height:1.5;
-}
-
+#devis-container{display:none;position:fixed;top:-9999px;left:-9999px;width:794px;background:#fff;color:#222;font-family:'Arial',sans-serif;font-size:12px;line-height:1.5;}
 .pdf-wrap{padding:28px 32px;}
-
-.pdf-header{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  margin-bottom:20px;padding-bottom:16px;border-bottom:3px solid #FF4500;
-}
+.pdf-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:3px solid #FF4500;}
 .pdf-logo{font-family:'Arial Black',sans-serif;font-size:22px;font-weight:900;color:#FF4500;letter-spacing:-0.5px;}
 .pdf-logo span{color:#222;}
 .pdf-num{text-align:right;}
 .pdf-num h1{font-size:16px;font-weight:800;color:#FF4500;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
 .pdf-num .meta{font-size:10px;color:#999;}
-
 .pdf-parties{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
 .pdf-bloc{background:#f8f8f8;border-radius:6px;padding:10px 13px;font-size:11px;line-height:1.8;}
 .pdf-bloc-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF4500;margin-bottom:5px;}
 .pdf-bloc strong{font-size:12px;color:#111;}
-
 .pdf-nature{background:#fff3ee;border-left:3px solid #FF4500;padding:8px 12px;font-size:11px;margin-bottom:16px;border-radius:0 6px 6px 0;}
-
 .pdf-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:6px;margin-top:4px;}
-
 .pdf-table{width:100%;border-collapse:collapse;margin-bottom:0;font-size:11px;}
 .pdf-table th{background:#FF4500;color:#fff;padding:7px 8px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.5px;}
 .pdf-table th:nth-child(2),.pdf-table th:nth-child(3){text-align:center;}
@@ -65,17 +45,13 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
 .pdf-table .td-unite{text-align:center;}
 .pdf-table .td-pu{text-align:right;}
 .pdf-table .td-total{text-align:right;font-weight:700;}
-
 .sec-row td{background:#fff3ee !important;padding:8px 8px 6px;border-bottom:none;}
 .sec-row-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#FF4500;}
-
 .subtotal-row td{background:#fff !important;border-top:1px solid #eee;border-bottom:2px solid #FF4500 !important;padding:5px 8px 8px;}
 .subtotal-row .subtotal-label{text-align:right;font-size:10px;color:#999;font-style:italic;}
 .subtotal-row .subtotal-val{text-align:right;font-size:11px;font-weight:700;color:#333;}
-
 .poste-titre{font-weight:700;color:#111;font-size:11px;}
 .poste-desc{font-size:10px;color:#888;margin-top:2px;}
-
 .pdf-totaux-wrap{display:flex;justify-content:flex-end;margin-top:16px;margin-bottom:4px;}
 .pdf-totaux{width:240px;border:1px solid #eee;border-radius:8px;overflow:hidden;}
 .pdf-trow{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;}
@@ -83,16 +59,12 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
 .pdf-trow-label{color:#666;}
 .pdf-trow:last-child .pdf-trow-label{color:#fff;}
 .pdf-trow-acompte{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;background:#fff8f5;color:#FF4500;font-weight:700;}
-
 .pdf-lettres{text-align:right;font-style:italic;font-size:10px;color:#999;margin-top:6px;margin-bottom:16px;}
-
 .pdf-footer-bloc{background:#f8f8f8;border-radius:6px;padding:10px 13px;font-size:10px;color:#666;line-height:1.8;margin-bottom:10px;}
 .pdf-footer-bloc strong{color:#333;font-size:11px;}
-
 .pdf-rib{background:#f0f7ff;border-left:3px solid #4a90d9;border-radius:0 6px 6px 0;padding:9px 12px;font-size:10px;color:#444;line-height:1.8;margin-bottom:10px;}
 .pdf-rib strong{color:#111;}
-
-.pdf-signature{margin-top:16px;padding-top:14px;border-top:1px dashed #ddd;text-align:center;font-size:10px;color:#aaa;}
+.pdf-signature{margin-top:16px;padding-top:14px;border-top:1px dashed #ddd;font-size:10px;color:#aaa;}
 .pdf-credit{margin-top:12px;text-align:center;font-size:9px;color:#ccc;}
 </style>
 </head>
@@ -129,309 +101,146 @@ function fmt(n){
 }
 
 function nombreEnLettres(n){
-  const nb = Math.round(n * 100) / 100;
-  const entier = Math.floor(nb);
-  const centimes = Math.round((nb - entier) * 100);
-
-  const u = ['','un','deux','trois','quatre','cinq','six','sept','huit','neuf',
-             'dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf'];
-  const d = ['','','vingt','trente','quarante','cinquante','soixante','soixante','quatre-vingt','quatre-vingt'];
-
-  function dizaines(n){
-    if(n < 20) return u[n];
-    const di = Math.floor(n/10), un = n%10;
-    if(di === 7) return un===1 ? 'soixante-et-onze' : 'soixante-'+u[10+un];
-    if(di === 9) return un===0 ? 'quatre-vingt-dix' : 'quatre-vingt-'+u[10+un];
-    if(di === 8) return un===0 ? 'quatre-vingts' : 'quatre-vingt-'+u[un];
-    return d[di]+(un===1&&di!==8?' et '+u[un]:un>0?'-'+u[un]:'');
-  }
-
-  function centaines(n){
-    if(n === 0) return '';
-    if(n < 100) return dizaines(n);
-    const c = Math.floor(n/100), r = n%100;
-    const pref = c===1?'cent':(u[c]+' cent');
-    return r===0?(c===1?'cent':u[c]+' cents'):pref+' '+dizaines(r);
-  }
-
-  function milliers(n){
-    if(n === 0) return 'zéro';
-    let res = '';
-    const mil = Math.floor(n/1000);
-    const reste = n%1000;
-    if(mil > 0){
-      res += (mil===1?'mille':(centaines(mil)+' mille'));
-      if(reste > 0) res += ' ';
-    }
-    if(reste > 0) res += centaines(reste);
-    return res;
-  }
-
-  let res = milliers(entier);
-  res = res.charAt(0).toUpperCase() + res.slice(1);
-  if(centimes > 0){
-    res += ' euro' + (entier > 1 ? 's' : '') + ' et ' + dizaines(centimes) + ' centime' + (centimes > 1 ? 's' : '');
-  } else {
-    res += ' euro' + (entier > 1 ? 's' : '');
-  }
+  const nb=Math.round(n*100)/100;const entier=Math.floor(nb);const centimes=Math.round((nb-entier)*100);
+  const u=['','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf'];
+  const d=['','','vingt','trente','quarante','cinquante','soixante','soixante','quatre-vingt','quatre-vingt'];
+  function dizaines(n){if(n<20)return u[n];const di=Math.floor(n/10),un=n%10;if(di===7)return un===1?'soixante-et-onze':'soixante-'+u[10+un];if(di===9)return un===0?'quatre-vingt-dix':'quatre-vingt-'+u[10+un];if(di===8)return un===0?'quatre-vingts':'quatre-vingt-'+u[un];return d[di]+(un===1&&di!==8?' et '+u[un]:un>0?'-'+u[un]:'');}
+  function centaines(n){if(n===0)return'';if(n<100)return dizaines(n);const c=Math.floor(n/100),r=n%100;const pref=c===1?'cent':(u[c]+' cent');return r===0?(c===1?'cent':u[c]+' cents'):pref+' '+dizaines(r);}
+  function milliers(n){if(n===0)return'zéro';let res='';const mil=Math.floor(n/1000),reste=n%1000;if(mil>0){res+=(mil===1?'mille':(centaines(mil)+' mille'));if(reste>0)res+=' ';}if(reste>0)res+=centaines(reste);return res;}
+  let res=milliers(entier);res=res.charAt(0).toUpperCase()+res.slice(1);
+  if(centimes>0){res+=' euro'+(entier>1?'s':'')+' et '+dizaines(centimes)+' centime'+(centimes>1?'s':'');}else{res+=' euro'+(entier>1?'s':'');}
   return res;
 }
 
 function renderHtml(d){
-  const ent = d.entreprise || {};
-  const client = d.client || {};
-  const chantier = d.chantier || {};
+  // Bloc signature — dynamique si devis signé, statique sinon
+  const sigBloc = d.signature
+    ? `<div style="display:flex;align-items:flex-start;gap:24px;margin-top:4px">
+        <div>
+          <div style="font-size:9px;color:#aaa;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Signature du client — Bon pour accord</div>
+          <img src="${d.signature}" style="max-height:60px;max-width:200px;border:1px solid #eee;border-radius:4px;padding:4px;background:#fff;display:block;">
+          <div style="font-size:9px;color:#888;margin-top:4px">${d.accepted_by||''} — ${d.accepted_at ? new Date(d.accepted_at).toLocaleDateString('fr-FR') : ''}</div>
+        </div>
+      </div>`
+    : `Bon pour accord : _________________________ &nbsp;&nbsp;&nbsp; Date : _________________________`;
 
-  const decCompagnie = d.decennale_compagnie || ent.decennale_compagnie || '';
-  const decNumero    = d.decennale_numero    || ent.decennale_numero    || '';
-  const banque       = d.banque   || ent.banque   || '';
-  const iban         = d.iban     || ent.iban     || '';
-  const bic          = d.bic      || ent.bic      || '';
-  const titulaire    = d.titulaire|| ent.titulaire|| '';
+  const ent=d.entreprise||{};const client=d.client||{};const chantier=d.chantier||{};
+  const decCompagnie=d.decennale_compagnie||ent.decennale_compagnie||'';
+  const decNumero=d.decennale_numero||ent.decennale_numero||'';
+  const banque=d.banque||ent.banque||'';const iban=d.iban||ent.iban||'';
+  const bic=d.bic||ent.bic||'';const titulaire=d.titulaire||ent.titulaire||'';
+  const acomptePct=d.acompte_pct||0;const acompteMontant=d.acompte_montant||0;
+  const acompteHtml=acomptePct>0?`<div class="pdf-trow-acompte"><span>Acompte ${acomptePct}%</span><span>${fmt(acompteMontant)} €</span></div>`:'';
+  const dateDebut=d.date_debut||'';
 
-  const acomptePct     = d.acompte_pct || 0;
-  const acompteMontant = d.acompte_montant || 0;
-  const acompteHtml = acomptePct > 0
-    ? `<div class="pdf-trow-acompte">
-        <span>Acompte ${acomptePct}%</span>
-        <span>${fmt(acompteMontant)} €</span>
-       </div>`
-    : '';
-
-  const dateDebut = d.date_debut || '';
-
-  let sectionsHtml = '';
-  let rowCounter = 0;
-
-  if(d.sections && d.sections.length){
-    d.sections.forEach(s => {
-      const sousTotalSection = s.postes.reduce((a,p) => a + Number(p.total_ht), 0);
-
-      sectionsHtml += `<tr class="sec-row">
-        <td colspan="5"><span class="sec-row-label">${s.emoji || ''} ${s.metier}</span></td>
-      </tr>`;
-
-      s.postes.forEach((p, i) => {
+  let sectionsHtml='';let rowCounter=0;
+  if(d.sections&&d.sections.length){
+    d.sections.forEach(s=>{
+      const sousTotalSection=s.postes.reduce((a,p)=>a+Number(p.total_ht),0);
+      sectionsHtml+=`<tr class="sec-row"><td colspan="5"><span class="sec-row-label">${s.emoji||''} ${s.metier}</span></td></tr>`;
+      s.postes.forEach((p,i)=>{
         rowCounter++;
-        const rowClass = rowCounter % 2 === 0 ? 'row-even' : 'row-odd';
-        sectionsHtml += `<tr class="${rowClass}">
-          <td>
-            <div class="poste-titre">${p.id}. ${p.titre}</div>
-            <div class="poste-desc">${p.description}</div>
-          </td>
-          <td class="td-qte">${p.qte}</td>
-          <td class="td-unite">${p.unite}</td>
-          <td class="td-pu">${fmt(p.pu_ht)} €</td>
-          <td class="td-total">${fmt(p.total_ht)} €</td>
-        </tr>`;
+        const rowClass=rowCounter%2===0?'row-even':'row-odd';
+        sectionsHtml+=`<tr class="${rowClass}"><td><div class="poste-titre">${p.id}. ${p.titre}</div><div class="poste-desc">${p.description}</div></td><td class="td-qte">${p.qte}</td><td class="td-unite">${p.unite}</td><td class="td-pu">${fmt(p.pu_ht)} €</td><td class="td-total">${fmt(p.total_ht)} €</td></tr>`;
       });
-
-      sectionsHtml += `<tr class="subtotal-row">
-        <td colspan="4" class="subtotal-label">Sous-total ${s.metier}</td>
-        <td class="subtotal-val">${fmt(sousTotalSection)} €</td>
-      </tr>`;
+      sectionsHtml+=`<tr class="subtotal-row"><td colspan="4" class="subtotal-label">Sous-total ${s.metier}</td><td class="subtotal-val">${fmt(sousTotalSection)} €</td></tr>`;
     });
   }
 
-  const totalTTC = Number(d.total_ttc) || 0;
-  const lettres = nombreEnLettres(totalTTC);
+  const totalTTC=Number(d.total_ttc)||0;
+  const lettres=nombreEnLettres(totalTTC);
+  const ribInline=iban?`<br><br><strong>🏦 Coordonnées bancaires</strong><br>${banque?banque+'<br>':''}IBAN : ${iban}${bic?' — BIC : '+bic:''}${titulaire?'<br>Titulaire : '+titulaire:''}`:'';
+  const decHtml=decCompagnie?`<br>🛡️ Assurance décennale : ${decCompagnie}${decNumero?' — Police n° '+decNumero:''}`:'' ;
+  const logoHtml=d.logo?`<img src="${d.logo}" style="max-height:52px;max-width:160px;object-fit:contain;">`:`<div style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;color:#111;letter-spacing:-0.5px">${ent.nom||'Votre Entreprise'}</div>`;
 
-  // RIB fusionné dans le bloc conditions pour éviter page blanche
-  const ribInline = iban ? `
-    <br><br>
-    <strong>🏦 Coordonnées bancaires</strong><br>
-    ${banque ? banque + '<br>' : ''}
-    IBAN : ${iban}${bic ? ' — BIC : ' + bic : ''}${titulaire ? '<br>Titulaire : ' + titulaire : ''}
-  ` : '';
-
-  const decHtml = decCompagnie ? `<br>🛡️ Assurance décennale : ${decCompagnie}${decNumero ? ' — Police n° ' + decNumero : ''}` : '';
-
-  const logoHtml = d.logo
-    ? `<img src="${d.logo}" style="max-height:52px;max-width:160px;object-fit:contain;">`
-    : `<div style="font-family:'Arial Black',sans-serif;font-size:20px;font-weight:900;color:#111;letter-spacing:-0.5px">${ent.nom || 'Votre Entreprise'}</div>`;
-
-  document.getElementById('devis-container').innerHTML = `
+  document.getElementById('devis-container').innerHTML=`
   <div class="pdf-wrap">
-
     <div class="pdf-header">
       <div class="pdf-logo">${logoHtml}</div>
-      <div class="pdf-num">
-        <h1>DEVIS N° ${d.numero}</h1>
-        <div class="meta">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}${dateDebut ? ' &nbsp;|&nbsp; <strong>Début :</strong> ' + dateDebut : ''}</div>
-      </div>
+      <div class="pdf-num"><h1>DEVIS N° ${d.numero}</h1><div class="meta">Date : ${d.date} &nbsp;|&nbsp; Validité : ${d.validite}${dateDebut?' &nbsp;|&nbsp; <strong>Début :</strong> '+dateDebut:''}</div></div>
     </div>
-
     <div class="pdf-parties">
-      <div class="pdf-bloc">
-        <div class="pdf-bloc-label">Entreprise</div>
-        <strong>${ent.nom || ''}</strong><br>
-        ${ent.siret   ? 'SIRET : ' + ent.siret + '<br>' : ''}
-        ${ent.tel     ? '📞 ' + ent.tel + '<br>' : ''}
-        ${ent.adresse ? '📍 ' + ent.adresse + '<br>' : ''}
-        ${ent.email   ? '✉️ ' + ent.email : ''}
-      </div>
-      <div class="pdf-bloc">
-        <div class="pdf-bloc-label">Maître d'Ouvrage</div>
-        <strong>${client.nom || ''}</strong><br>
-        ${client.email ? '✉️ ' + client.email + '<br>' : ''}
-        ${client.tel   ? '📞 ' + client.tel + '<br>' : ''}
-        ${chantier.adresse ? '📍 ' + chantier.adresse : ''}
-      </div>
+      <div class="pdf-bloc"><div class="pdf-bloc-label">Entreprise</div><strong>${ent.nom||''}</strong><br>${ent.siret?'SIRET : '+ent.siret+'<br>':''}${ent.tel?'📞 '+ent.tel+'<br>':''}${ent.adresse?'📍 '+ent.adresse+'<br>':''}${ent.email?'✉️ '+ent.email:''}</div>
+      <div class="pdf-bloc"><div class="pdf-bloc-label">Maître d'Ouvrage</div><strong>${client.nom||''}</strong><br>${client.email?'✉️ '+client.email+'<br>':''}${client.tel?'📞 '+client.tel+'<br>':''}${chantier.adresse?'📍 '+chantier.adresse:''}</div>
     </div>
-
-    <div class="pdf-nature">
-      <strong>Nature des travaux :</strong> ${chantier.nature || '—'}
-      &nbsp;&nbsp;|&nbsp;&nbsp;
-      <strong>Délai :</strong> ${chantier.delai || '—'}
-      ${dateDebut ? '&nbsp;&nbsp;|&nbsp;&nbsp;<strong>Début :</strong> ' + dateDebut : ''}
-    </div>
-
+    <div class="pdf-nature"><strong>Nature des travaux :</strong> ${chantier.nature||'—'} &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Délai :</strong> ${chantier.delai||'—'}${dateDebut?' &nbsp;&nbsp;|&nbsp;&nbsp;<strong>Début :</strong> '+dateDebut:''}</div>
     <div class="pdf-section-title">Descriptif des Ouvrages</div>
     <table class="pdf-table">
-      <thead>
-        <tr>
-          <th>Désignation</th>
-          <th style="text-align:center;width:48px">Qté</th>
-          <th style="text-align:center;width:52px">Unité</th>
-          <th style="text-align:right;width:72px">P.U. HT €</th>
-          <th style="text-align:right;width:80px">Total HT €</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Désignation</th><th style="text-align:center;width:48px">Qté</th><th style="text-align:center;width:52px">Unité</th><th style="text-align:right;width:72px">P.U. HT €</th><th style="text-align:right;width:80px">Total HT €</th></tr></thead>
       <tbody>${sectionsHtml}</tbody>
     </table>
-
     <div class="pdf-totaux-wrap">
       <div class="pdf-totaux">
-        <div class="pdf-trow">
-          <span class="pdf-trow-label">Total HT</span>
-          <span>${fmt(d.total_ht)} €</span>
-        </div>
-        <div class="pdf-trow">
-          <span class="pdf-trow-label">TVA ${d.tva_pct}%</span>
-          <span>${fmt(d.tva_montant)} €</span>
-        </div>
-        <div class="pdf-trow">
-          <span class="pdf-trow-label">TOTAL TTC</span>
-          <span>${fmt(d.total_ttc)} €</span>
-        </div>
+        <div class="pdf-trow"><span class="pdf-trow-label">Total HT</span><span>${fmt(d.total_ht)} €</span></div>
+        <div class="pdf-trow"><span class="pdf-trow-label">TVA ${d.tva_pct}%</span><span>${fmt(d.tva_montant)} €</span></div>
+        <div class="pdf-trow"><span class="pdf-trow-label">TOTAL TTC</span><span>${fmt(d.total_ttc)} €</span></div>
         ${acompteHtml}
       </div>
     </div>
-
     <div class="pdf-lettres">Arrêté à : <em>${lettres}</em></div>
-
-    <div class="pdf-footer-bloc">
-      <strong>Conditions :</strong> ${d.conditions || 'Solde à réception et levée des réserves'}<br>
-      ${d.mentions || ''}${decHtml}${ribInline}
-    </div>
-
-    <div class="pdf-signature">
-      Bon pour accord : _________________________ &nbsp;&nbsp;&nbsp; Date : _________________________
-    </div>
-
+    <div class="pdf-footer-bloc"><strong>Conditions :</strong> ${d.conditions||'Solde à réception et levée des réserves'}<br>${d.mentions||''}${decHtml}${ribInline}</div>
+    <div class="pdf-signature">${sigBloc}</div>
     <div class="pdf-credit">Généré avec DevisVoice</div>
-
   </div>`;
 }
 
 async function telecharger(){
-  if(!devisData) return;
-  const { jsPDF } = window.jspdf;
-  const el = document.getElementById('devis-container');
-  el.style.display = 'block';
+  if(!devisData)return;
+  const{jsPDF}=window.jspdf;
+  const el=document.getElementById('devis-container');
+  el.style.display='block';
   renderHtml(devisData);
-
-  await new Promise(r => setTimeout(r, 600));
-
-  const pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
-  const pageW   = pdf.internal.pageSize.getWidth();
-  const pageH   = pdf.internal.pageSize.getHeight();
-  const margin  = 12;
-  const contentW = pageW - margin * 2;
-  const scale   = 2;
-
-  const safeRows = el.querySelectorAll('tr, .pdf-footer-bloc, .pdf-rib, .pdf-signature, .pdf-lettres, .pdf-totaux-wrap');
-  const elRect = el.getBoundingClientRect();
-  const safeBreaks = [];
-  safeRows.forEach(row => {
-    const rect = row.getBoundingClientRect();
-    const bottomPx = (rect.bottom - elRect.top) * scale;
-    if(bottomPx > 0) safeBreaks.push(bottomPx);
-  });
-  safeBreaks.sort((a,b) => a - b);
-
-  const fullCanvas = await html2canvas(el, {
-    scale,
-    backgroundColor:'#ffffff',
-    windowWidth: 794,
-    scrollY: 0,
-    useCORS: true
-  });
-  el.style.display = 'none';
-
-  const pageHeightPx = (pageH - margin * 2) * (fullCanvas.width / contentW);
-
-  let pageStart = 0;
-  let pageNum   = 0;
-
-  while(pageStart < fullCanvas.height){
-    if(pageNum > 0) pdf.addPage();
-
-    let pageEnd = pageStart + pageHeightPx;
-
-    if(pageEnd < fullCanvas.height){
-      let bestBreak = pageEnd;
-      for(let i = safeBreaks.length - 1; i >= 0; i--){
-        if(safeBreaks[i] <= pageEnd && safeBreaks[i] > pageStart){
-          bestBreak = safeBreaks[i];
-          break;
-        }
-      }
-      pageEnd = bestBreak;
-    } else {
-      pageEnd = fullCanvas.height;
-    }
-
-    const sliceH = pageEnd - pageStart;
-    if(sliceH <= 0) break;
-
-    const sliceCanvas = document.createElement('canvas');
-    sliceCanvas.width  = fullCanvas.width;
-    sliceCanvas.height = sliceH;
-    const ctx = sliceCanvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
-    ctx.drawImage(fullCanvas, 0, pageStart, fullCanvas.width, sliceH, 0, 0, fullCanvas.width, sliceH);
-
-    const imgData = sliceCanvas.toDataURL('image/jpeg', 0.93);
-    const sliceHeightMm = sliceH * (contentW / fullCanvas.width);
-    pdf.addImage(imgData, 'JPEG', margin, margin, contentW, sliceHeightMm);
-
-    pageStart = pageEnd;
-    pageNum++;
+  await new Promise(r=>setTimeout(r,600));
+  const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const pageW=pdf.internal.pageSize.getWidth();
+  const pageH=pdf.internal.pageSize.getHeight();
+  const margin=12;const contentW=pageW-margin*2;const scale=2;
+  const safeRows=el.querySelectorAll('tr, .pdf-footer-bloc, .pdf-rib, .pdf-signature, .pdf-lettres, .pdf-totaux-wrap');
+  const elRect=el.getBoundingClientRect();const safeBreaks=[];
+  safeRows.forEach(row=>{const rect=row.getBoundingClientRect();const bottomPx=(rect.bottom-elRect.top)*scale;if(bottomPx>0)safeBreaks.push(bottomPx);});
+  safeBreaks.sort((a,b)=>a-b);
+  const fullCanvas=await html2canvas(el,{scale,backgroundColor:'#ffffff',windowWidth:794,scrollY:0,useCORS:true});
+  el.style.display='none';
+  const pageHeightPx=(pageH-margin*2)*(fullCanvas.width/contentW);
+  let pageStart=0;let pageNum=0;
+  while(pageStart<fullCanvas.height){
+    if(pageNum>0)pdf.addPage();
+    let pageEnd=pageStart+pageHeightPx;
+    if(pageEnd<fullCanvas.height){
+      let bestBreak=pageEnd;
+      for(let i=safeBreaks.length-1;i>=0;i--){if(safeBreaks[i]<=pageEnd&&safeBreaks[i]>pageStart){bestBreak=safeBreaks[i];break;}}
+      pageEnd=bestBreak;
+    }else{pageEnd=fullCanvas.height;}
+    const sliceH=pageEnd-pageStart;if(sliceH<=0)break;
+    const sliceCanvas=document.createElement('canvas');sliceCanvas.width=fullCanvas.width;sliceCanvas.height=sliceH;
+    const ctx=sliceCanvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,sliceCanvas.width,sliceCanvas.height);
+    ctx.drawImage(fullCanvas,0,pageStart,fullCanvas.width,sliceH,0,0,fullCanvas.width,sliceH);
+    const imgData=sliceCanvas.toDataURL('image/jpeg',0.93);
+    const sliceHeightMm=sliceH*(contentW/fullCanvas.width);
+    pdf.addImage(imgData,'JPEG',margin,margin,contentW,sliceHeightMm);
+    pageStart=pageEnd;pageNum++;
   }
-
-  pdf.save('Devis-' + devisData.numero + '.pdf');
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('success').style.display = 'block';
+  pdf.save('Devis-'+devisData.numero+'.pdf');
+  document.getElementById('loading').style.display='none';
+  document.getElementById('success').style.display='block';
 }
 
 async function init(){
-  const id = new URLSearchParams(window.location.search).get('id');
-  if(!id){
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error').style.display   = 'block';
-    return;
-  }
+  const id=new URLSearchParams(window.location.search).get('id');
+  if(!id){document.getElementById('loading').style.display='none';document.getElementById('error').style.display='block';return;}
   try{
-    const r = await fetch(BACKEND + '/api/devis/' + encodeURIComponent(id));
-    if(!r.ok) throw new Error();
-    const row = await r.json();
-    devisData = typeof row.data === 'string' ? JSON.parse(row.data) : row.data;
+    const r=await fetch(BACKEND+'/api/devis/'+encodeURIComponent(id));
+    if(!r.ok)throw new Error();
+    const row=await r.json();
+    devisData=typeof row.data==='string'?JSON.parse(row.data):row.data;
+    // Récupérer signature et infos acceptation depuis la row
+    devisData.signature   = row.signature   || null;
+    devisData.accepted_by = row.accepted_by || '';
+    devisData.accepted_at = row.accepted_at || null;
     await telecharger();
-  } catch(e){
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error').style.display   = 'block';
+  }catch(e){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error').style.display='block';
   }
 }
 
