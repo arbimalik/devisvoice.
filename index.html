@@ -186,6 +186,76 @@ select option{background:var(--card);color:var(--text);}
 
 .savebadge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,180,80,.12);color:#00b450;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-top:8px;opacity:0;transition:opacity .3s;}
 .savebadge.show{opacity:1;}
+
+/* ========= RESPONSIVE MOBILE ========= */
+@media(max-width:480px){
+
+  /* Navigation */
+  nav{padding:0 12px;height:50px;}
+  .logo{font-size:18px;}
+  .btn-agent{font-size:10px;padding:6px 10px;}
+  .theme-sw{gap:1px;padding:2px;}
+  .tbtn{width:24px;height:24px;}
+
+  /* Tabs */
+  .tabs{padding:0 8px;}
+  .tab{font-size:12px;padding:11px 10px 9px;}
+
+  /* Contenu */
+  .content{padding:12px 10px 80px;}
+
+  /* Cards */
+  .card-body{padding:12px 14px;}
+  .card-header{font-size:11px;padding:11px 14px;}
+
+  /* Formulaires */
+  input,textarea,select{font-size:16px !important;height:46px;}
+  textarea{height:auto;}
+  label{font-size:9px;}
+
+  /* Micro / dictée */
+  .mic-zone{padding:20px 0 14px;}
+  .mic-wrap{width:110px;height:110px;margin-bottom:14px;}
+  .mic-main{width:76px;height:76px;}
+  .mic-main svg{width:30px;height:30px;}
+  .rpl-1,.rpl-2,.rpl-3{width:110px;height:110px;}
+  .mic-lbl{font-size:12px;}
+
+  /* Boutons actions */
+  .btn-primary{font-size:14px;padding:14px;}
+  .btn-sec{font-size:12px;padding:8px 12px;}
+  .res-actions{gap:6px;padding:10px 12px;}
+  .res-actions .btn-sec{flex:1;text-align:center;}
+
+  /* Devis preview */
+  .devis-preview{padding:14px 12px;font-size:12px;}
+  .devis-preview h1{font-size:16px;}
+  .devis-preview table{font-size:11px;}
+  .devis-preview th,.devis-preview td{padding:5px 6px;}
+  .totaux-box{width:100%;margin-left:0;margin-top:10px;}
+
+  /* Stats tableau de bord */
+  #stat-envoyes,#stat-acceptes{font-size:26px;}
+  #stat-montant{font-size:20px;}
+
+  /* Pricing */
+  .tcard-grid{grid-template-columns:1fr;}
+  .tprice{font-size:24px;}
+
+  /* Metiers grid */
+  .metiers-grid{grid-template-columns:repeat(2,1fr);}
+  .mc{font-size:10px;padding:7px 8px;}
+
+  /* Exemple box */
+  .ex-box p{font-size:11px;}
+
+  /* Sbar */
+  .sbar{font-size:12px;padding:10px 12px;}
+
+  /* Dictée box */
+  .dictee-box{font-size:14px;min-height:65px;padding:11px;}
+}
+
 </style>
 </head>
 <body>
