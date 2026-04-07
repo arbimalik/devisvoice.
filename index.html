@@ -1011,28 +1011,33 @@ async function genererDevis(){
   const prixBlock=prixArtisan.length>0?`\nTARIFS ENREGISTRÉS PAR L'ARTISAN (utilise ces prix en priorité absolue):\n${prixArtisan.map(p=>'- '+p).join('\n')}\n`:'';
 
   function showProgress(etape,total,label){
-    const pct=Math.round((etape/total)*100);
+    const pct=total===0?0:Math.round((etape/total)*100);
     const msgs=['⚡ Analyse de votre dictée…','🔍 Identification des postes…','📐 Calcul des quantités…','✍️ Rédaction du devis…','🎯 Finalisation en cours…'];
     const msgIdx=Math.min(etape,msgs.length-1);
-    const msg=etape===total?'✅ Devis prêt !' : msgs[msgIdx];
-    const sbar=document.getElementById('sbar');
-    sbar.className='sbar loading';
-    sbar.style.display='flex';
-    sbar.innerHTML=`
-      <div style="width:100%;padding:4px 0">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <span style="font-size:13px;font-weight:700;color:var(--text)">${msg}</span>
-          <span style="font-size:12px;font-weight:700;color:var(--accent)">${pct}%</span>
-        </div>
-        <div style="background:var(--bg3);border-radius:20px;height:10px;width:100%;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.1)">
-          <div id="prog-bar" style="height:100%;width:0%;border-radius:20px;background:linear-gradient(90deg,#00c853,#00e676);transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(0,200,83,.4)"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:11px;color:var(--text2)">
-          <span>${label}</span>
-          ${total>1?`<span>${etape}/${total} passes</span>`:''}
-        </div>
-      </div>`;
-    setTimeout(()=>{ const b=document.getElementById('prog-bar'); if(b)b.style.width=pct+'%'; },50);
+    const msg=etape===total && total>0?'✅ Devis prêt !' : msgs[msgIdx];
+    // Utiliser un div dédié à la progression plutôt que sbar
+    let pbox=document.getElementById('progress-box');
+    if(!pbox){
+      pbox=document.createElement('div');
+      pbox.id='progress-box';
+      const sbar=document.getElementById('sbar');
+      sbar.parentNode.insertBefore(pbox,sbar);
+    }
+    pbox.style.cssText='display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-top:13px;';
+    pbox.innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:13px;font-weight:700;color:var(--text)">${msg}</span>
+        <span style="font-size:13px;font-weight:800;color:#00b450">${pct}%</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:20px;height:12px;width:100%;overflow:hidden;">
+        <div id="prog-bar" style="height:100%;width:0%;border-radius:20px;background:linear-gradient(90deg,#00c853,#00e676);transition:width .5s ease;"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-top:7px;">${label}</div>`;
+    setTimeout(()=>{const b=document.getElementById('prog-bar');if(b)b.style.width=pct+'%';},30);
+    // Masquer si terminé
+    if(etape===total && total>0){
+      setTimeout(()=>{if(pbox)pbox.style.display='none';},1500);
+    }
   }
 
   const TAILLE_PASSE=12;
@@ -1354,6 +1359,7 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
         fetch(BACKEND+'/api/devis/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
           id:parsed.numero,data:parsed,
           artisanEmail:ls('ent-email')||'',
+          artisanNom:ls('ent-nom')||'',
           clientEmail:document.getElementById('client-email').value||''
         })}).catch(()=>{});
       } else {
