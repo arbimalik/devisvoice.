@@ -864,7 +864,9 @@ function toggleMic(){
 
 function startMic(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){setLbl('❌ Non supporté sur ce navigateur',false);return;}
   if(recog){try{recog.abort();}catch(e){} recog=null;}
+  isRec=false;
   recog=new SR();recog.lang='fr-FR';recog.continuous=true;recog.interimResults=true;
   const el=document.getElementById('dictee-text');
   let base=el.innerText.trim();if(base)base+=' ';
@@ -897,7 +899,7 @@ function startMic(){
 
 function stopMic(){
   isRec=false;
-  if(recog)recog.stop();
+  if(recog){try{recog.stop();}catch(e){} try{recog.abort();}catch(e){} recog=null;}
   stopAudioViz();
   document.getElementById('mic-btn').classList.remove('rec');
   document.getElementById('mic-wrap').classList.remove('recording');
@@ -1463,6 +1465,24 @@ RÈGLES ABSOLUES: Ne jamais inventer un prix. Utiliser uniquement les prix dict�
   finally{document.getElementById('btn-gen').disabled=false;}
 }
 
+
+function supprimerPoste(sIdx, pIdx){
+  if(!devisData || !devisData.sections) return;
+  devisData.sections[sIdx].postes.splice(pIdx, 1);
+  // Supprimer section si vide
+  if(devisData.sections[sIdx].postes.length === 0){
+    devisData.sections.splice(sIdx, 1);
+  }
+  // Recalculer totaux
+  const totalHT = devisData.sections.reduce((a,s)=>a+s.postes.reduce((b,p)=>b+Number(p.total_ht),0),0);
+  const tvaPct = Number(devisData.tva_pct||10);
+  devisData.total_ht = Math.round(totalHT*100)/100;
+  devisData.tva_montant = Math.round(totalHT*(tvaPct/100)*100)/100;
+  devisData.total_ttc = Math.round((totalHT+devisData.tva_montant)*100)/100;
+  if(devisData.acompte_pct>0) devisData.acompte_montant = Math.round(devisData.total_ttc*devisData.acompte_pct/100*100)/100;
+  renderDevis(devisData);
+}
+
 function renderDevis(d){
   let sectionsHtml='';
   if(d.sections && d.sections.length){
@@ -1484,6 +1504,9 @@ function renderDevis(d){
               style="width:75px;padding:3px 5px;border:1.5px solid var(--border);border-radius:5px;font-size:12px;background:var(--input-bg);color:var(--text);text-align:right;">
           </td>
           <td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:right"><strong>${fmt(p.total_ht)}</strong></td>
+          <td style="padding:7px 4px;border-bottom:1px solid var(--border);text-align:center;width:32px">
+            <button onclick="supprimerPoste(${sIdx},${pIdx})" style="background:rgba(220,50,50,.08);color:#e04040;border:none;border-radius:5px;width:26px;height:26px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;padding:0;" title="Supprimer">×</button>
+          </td>
         </tr>`).join('');
       const sousTotalSection=s.postes.reduce((a,p)=>a+Number(p.total_ht),0);
       return `
@@ -1527,7 +1550,7 @@ function renderDevis(d){
   </div>
   <div class="iblk" style="margin-bottom:14px"><p><strong>Nature des travaux :</strong> ${d.chantier.nature} &nbsp; <strong>Délai :</strong> ${d.chantier.delai}</p></div>
   <h2>Descriptif des Ouvrages</h2>
-  <table><thead><tr><th>Désignation</th><th style="text-align:center">Qté</th><th style="text-align:center">Unité</th><th style="text-align:right">P.U. HT €</th><th style="text-align:right">Total HT €</th></tr></thead><tbody>${sectionsHtml}</tbody></table>
+  <table><thead><tr><th>Désignation</th><th style="text-align:center">Qté</th><th style="text-align:center">Unité</th><th style="text-align:right">P.U. HT €</th><th style="text-align:right">Total HT €</th><th style="width:32px"></th></tr></thead><tbody>${sectionsHtml}</tbody></table>
   <div style="margin-bottom:14px">
     <div style="background:var(--bg3);border:1.5px dashed var(--border);border-radius:8px;padding:12px 14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -2021,7 +2044,39 @@ let obsRecog = null;
 let obsIsRec = false;
 
 function majObservations(val){
-  if(devisData) devisData.observations = val;
+  if(!devisData) return;
+  devisData.observations = val;
+  // Re-sauvegarder en BDD avec les observations
+  clearTimeout(window._obsSaveTimer);
+  window._obsSaveTimer = setTimeout(()=>{
+    fetch(BACKEND+'/api/devis/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      id:devisData.numero, data:devisData,
+      artisanEmail:ls('ent-email')||'',
+      artisanNom:ls('ent-nom')||'',
+      clientEmail:document.getElementById('client-email').value||''
+    })}).catch(()=>{});
+  }, 1000);
+}
+
+async function reformaterObsIA(textebrut){
+  if(!textebrut.trim()) return;
+  const el = document.getElementById('obs-textarea');
+  const btn = document.getElementById('obs-mic-btn');
+  btn.textContent='⏳ Reformulation…'; btn.disabled=true;
+  try{
+    const r = await fetch(BACKEND+'/api/claude',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({payload:{
+        model:'claude-sonnet-4-5', max_tokens:300,
+        messages:[{role:'user',content:`Tu es un assistant pour artisan du bâtiment. Reformule ce texte dicté à voix haute en une observation professionnelle et claire pour un devis. Texte brut : "${textebrut}". Réponds uniquement avec le texte reformulé, sans guillemets ni explication.`}]
+      }})
+    });
+    const res = await r.json();
+    const reformule = res.content?.[0]?.text || textebrut;
+    el.value = reformule;
+    majObservations(reformule);
+  }catch(e){ /* garder le texte brut si erreur */ }
+  btn.textContent='🎙 Dicter'; btn.disabled=false; btn.style.background='var(--accent)';
 }
 
 function toggleObsVoice(){
@@ -2058,9 +2113,14 @@ function startObsVoice(){
 
 function stopObsVoice(){
   obsIsRec=false;
-  if(obsRecog){ try{obsRecog.stop();}catch(e){} }
-  const btn=document.getElementById('obs-mic-btn');
-  if(btn){ btn.textContent='🎙 Dicter'; btn.style.background='var(--accent)'; }
+  if(obsRecog){ try{obsRecog.stop();}catch(e){} try{obsRecog.abort();}catch(e){} obsRecog=null; }
+  const el = document.getElementById('obs-textarea');
+  if(el && el.value.trim()){
+    reformaterObsIA(el.value);
+  } else {
+    const btn=document.getElementById('obs-mic-btn');
+    if(btn){ btn.textContent='🎙 Dicter'; btn.style.background='var(--accent)'; }
+  }
 }
 
 
