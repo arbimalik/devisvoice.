@@ -94,6 +94,18 @@ h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8p
 
 <script>
 const BACKEND = 'https://devisvoice-backend-production-9ed2.up.railway.app';
+
+// Thème dynamique — récupérer la couleur accent depuis localStorage ou param URL
+function getAccentColor(){
+  const theme = localStorage.getItem('theme') || 'light-orange';
+  const colors = {
+    'light-orange':'#FF4500',
+    'dark-orange':'#FF4500',
+    'light-blue':'#1d6fd8',
+    'light-green':'#c9a96e'
+  };
+  return colors[theme] || '#FF4500';
+}
 let devisData = null;
 
 function fmt(n){
@@ -110,6 +122,25 @@ function nombreEnLettres(n){
   let res=milliers(entier);res=res.charAt(0).toUpperCase()+res.slice(1);
   if(centimes>0){res+=' euro'+(entier>1?'s':'')+' et '+dizaines(centimes)+' centime'+(centimes>1?'s':'');}else{res+=' euro'+(entier>1?'s':'');}
   return res;
+}
+
+function applyThemeToCSS(){
+  const accent = getAccentColor();
+  const style = document.createElement('style');
+  style.textContent = `
+    .pdf-header{border-bottom-color:${accent}!important;}
+    .pdf-logo div{color:${accent}!important;}
+    .pdf-num h1{color:${accent}!important;}
+    .pdf-bloc-label{color:${accent}!important;}
+    .pdf-nature{border-left-color:${accent}!important;background:${accent}11!important;}
+    .pdf-table th{background:${accent}!important;}
+    .sec-row-label{color:${accent}!important;}
+    .sec-row td{background:${accent}11!important;}
+    .subtotal-row td{border-bottom-color:${accent}!important;}
+    .pdf-trow:last-child{background:${accent}!important;}
+    .pdf-trow-acompte{color:${accent}!important;}
+  `;
+  document.head.appendChild(style);
 }
 
 function renderHtml(d){
@@ -179,6 +210,7 @@ function renderHtml(d){
     </div>
     <div class="pdf-lettres">Arrêté à : <em>${lettres}</em></div>
     <div class="pdf-footer-bloc"><strong>Conditions :</strong> ${d.conditions||'Solde à réception et levée des réserves'}<br>${d.mentions||''}${decHtml}${ribInline}</div>
+    ${d.observations?`<div style="background:#fffbf0;border-left:3px solid #e08000;border-radius:0 6px 6px 0;padding:10px 13px;margin-bottom:10px;font-size:10px;color:#555;line-height:1.7;"><strong style="color:#e08000;">📝 Observations :</strong><br>${d.observations}</div>`:''}
     <div class="pdf-signature">${sigBloc}</div>
     <div class="pdf-credit">Généré avec DevisVoice</div>
   </div>`;
@@ -186,6 +218,7 @@ function renderHtml(d){
 
 async function telecharger(){
   if(!devisData)return;
+  applyThemeToCSS();
   const{jsPDF}=window.jspdf;
   const el=document.getElementById('devis-container');
   el.style.display='block';
